@@ -24,7 +24,7 @@ export default function CradsExercise({ page, setPage, setNumLine }) {
 
     useEffect(() => {
         const fetchData = () => {
-            fetch('http://192.168.0.134:8000/cards/')
+            fetch('https://i.zyll.shop/cards/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -76,16 +76,16 @@ export default function CradsExercise({ page, setPage, setNumLine }) {
                 display={page === 'cards_view' ? 'flex' : 'none'}
                 alignItems={'center'}
             >
-                <Text fontFamily={font1} fontSize={22} color={'#000'}>التمرين الأول </Text>
+                <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} color={'#000'}>التمرين الأول </Text>
 
                 <Flex flexDir={'column'} mt={16}>
-                    <Text fontFamily={font1} fontSize={22} pb={4}>إرشادات التمرين:</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} pb={4}>إرشادات التمرين:</Text>
                     <TextBox txt={'ستظهر لك مجموعة بطاقات تحتوي على كلمات  اسحب البطاقة لمكانها المناسب'} />
                     <TextBox txt={'ركز على الكلمات وحاول سحب اعراب كل كلمة لمكانها الصحيح'} />
                 </Flex>
 
                 <Flex mt={20} alignItems={'center'}  >
-                    <Text fontFamily={font1} fontSize={24} ml={8}>إنتقل للأسئلة</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} ml={8}>إنتقل للأسئلة</Text>
                     {resp !== null ? (
                         <Image cursor={'pointer'} onClick={handleNext} src={next_png} width={'60px'} transform="rotate(180deg)" />
                     ) : (
@@ -123,7 +123,7 @@ const Results = ({ page, setPage, resp, chooses }) => {
         const fetchData = () => {
             const query = { sentence: resp.sentence, chooses: chooses };
 
-            fetch('http://192.168.0.134:8000/cards-solve/', {
+            fetch('https://i.zyll.shop/cards-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -169,7 +169,7 @@ const Results = ({ page, setPage, resp, chooses }) => {
                         src={success_png}
                         width={'180px'}
                     />
-                    <Text fontFamily={font1} fontSize={24} mt={12}>أحسنت</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}>أحسنت</Text>
 
 
                 </>
@@ -185,7 +185,7 @@ const Results = ({ page, setPage, resp, chooses }) => {
                     overflowY={'scroll'}
                 >
                     {respSolve !== null && respSolve.wrong_chooses.map((item) => (
-                        <Text fontFamily={font1} dir='rtl' mt={1} color={'black'}>
+                        <Text fontFamily={font1} dir='rtl' mt={1} color={'black'} fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}>
                             {item.word} ?
                             <Box as='spin' color={'green'}> {item.correct_parsing}</Box>
                             <Box as='spin' color={'silver'} mr={2}>{item.why}</Box>
@@ -193,7 +193,7 @@ const Results = ({ page, setPage, resp, chooses }) => {
                     ))}
                 </Flex>
             )}
-            <Text fontFamily={font1} fontSize={24} mt={12}> والأن انتقل إلى التمرين الثاني </Text>
+            <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}> والأن انتقل إلى التمرين الثاني </Text>
             <Image
                 src={next_png}
                 transform="rotate(180deg)"
@@ -217,7 +217,7 @@ const TextBox = ({ txt }) => {
             mt={2}
         >
             <Box height={'6px'} width={'6px'} bgColor={'black'} mt={{ base: 3.5, md: 2 }} ml={3}></Box>
-            <Text width={'100%'} fontFamily={font1} fontSize={22}>{txt}</Text>
+            <Text width={'100%'} fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }}>{txt}</Text>
         </Flex>
     )
 }
@@ -321,7 +321,7 @@ function Cards({ page, setPage, data, finished, setFinished, chooses }) {
                 </Flex>
                 <Text
                     fontFamily={font1}
-                    fontSize={26}
+                    fontSize={{ base: 26, "2xl": 28, "3xl": 30 }}
                     alignSelf={'center'}
                     w={{ base: '100%', md: '80%' }}
                     pb={10}
@@ -377,7 +377,7 @@ function DropArea({ id, label, card }) {
         <Droppable droppableId={id}>
             {(provided) => (
                 <Flex alignItems={'center'} flexDir={{ base: 'column', md: 'row' }}>
-                    <Text fontFamily={font1} fontSize={22} pr={{ base: 0, md: 0 }} width={{ base: 'auto', md: '120px' }}>{label}</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} pr={{ base: 0, md: 0 }} width={{ base: 'auto', md: '120px' }}>{label}</Text>
                     <Flex
                         ref={provided.innerRef}
                         {...provided.droppableProps}

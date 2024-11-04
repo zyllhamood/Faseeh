@@ -11,7 +11,7 @@ export default function FullBlank() {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch('http://192.168.0.134:8000/full-blank/')
+            fetch('https://i.zyll.shop/full-blank/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -269,7 +269,7 @@ const Results = ({ wrongAnswers }) => {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch('http://192.168.0.134:8000/full-blank-solve/', {
+            fetch('https://i.zyll.shop/full-blank-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

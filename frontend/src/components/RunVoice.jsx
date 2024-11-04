@@ -44,7 +44,7 @@ const RunVoice = ({ src }) => {
     return (
         <Flex
             alignItems="center"
-            width={{ base: '340px', md: '340px' }}
+            width={{ base: '340px', md: '340px', "2xl": "360px", "3xl": "380px" }}
             alignSelf={'center'}
             justifyContent={'center'}
             boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"

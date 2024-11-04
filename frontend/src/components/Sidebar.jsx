@@ -76,7 +76,7 @@ const NavContent = ({ page, handleNavigate, handleLogout }) => {
             <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'} >
                 <Text
                     fontFamily={'Rubik, sans-serif'}
-                    fontSize={44}
+                    fontSize={{ base: 44, "2xl": 46, "3xl": 48 }}
                     mt={'80px'}
                     mb={4}
                     fontWeight={700}
@@ -105,7 +105,7 @@ const NavContent = ({ page, handleNavigate, handleLogout }) => {
                 <Item txt={'التقارير والتحليل'} icon={'hugeicons:analysis-text-link'} active={page === 'Reports' ? true : false} onClick={() => handleNavigate('/reports')} />
             </Flex>
             <Box
-                mt={'170px'}
+                mt={{ base: '170px', "2xl": "100px", "3xl": "286px" }}
                 height={'3px'}
                 bgColor={'white'}
                 borderRadius={16}
@@ -121,7 +121,7 @@ const NavContent = ({ page, handleNavigate, handleLogout }) => {
                 alignSelf={'center'}
                 mt={4}
                 fontFamily={font2}
-                fontSize={18}
+                fontSize={{ base: 18, "2xl": 20, "3xl": 22 }}
                 justifyContent="space-between"
                 rightIcon={<Icon icon={'ic:outline-settings'} width={20} />}
             >
@@ -131,8 +131,9 @@ const NavContent = ({ page, handleNavigate, handleLogout }) => {
                 width={'86%'}
                 alignSelf={'center'}
                 mt={4}
+
                 fontFamily={font2}
-                fontSize={18}
+                fontSize={{ base: 18, "2xl": 20, "3xl": 22 }}
                 justifyContent="space-between"
                 rightIcon={<Icon icon={'ic:outline-logout'} width={20} />}
                 onClick={handleLogout}

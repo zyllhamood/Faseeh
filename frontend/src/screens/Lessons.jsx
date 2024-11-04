@@ -3,7 +3,6 @@ import { Flex, Text, Box, Button, Image, Avatar, Input, InputGroup, InputRightEl
 import { Icon } from '@iconify/react';
 import Sidebar from '../components/Sidebar';
 import { bk1, bk2, bk3, font1, fr1 } from '../localVars';
-import BtnLesson from '../components/BtnLesson';
 import Lesson2 from '../components/Lesson2';
 import AvatarName from '../components/AvatarName';
 import Cookies from 'js-cookie'
@@ -14,26 +13,32 @@ import Lesson4 from '../components/Lesson4';
 export default function Lessons() {
     const navigate = useNavigate();
     const [lessons, setLessons] = useState(null);
+    const [notStartLessons, setNotStartLessons] = useState(null);
+    const [allLessons, setAllLessons] = useState(null);
     const access_token = Cookies.get('access_token');
     useEffect(() => {
         if (lessons === null) {
             if (access_token !== null || access_token !== undefined || access_token !== "") {
-                fetch('http://192.168.0.134:8000/lessons/', {
+                fetch('https://i.zyll.shop/lessons/', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + access_token
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) => setLessons(data))
+                    .then((data) => {
+                        setNotStartLessons(data);
+                        setLessons(data);
+                    })
             }
-            else {
-                fetch('http://192.168.0.134:8000/lessons/')
+
+            if (allLessons === null) {
+                fetch('https://i.zyll.shop/lessons/')
                     .then((response) => response.json())
-                    .then((data) => setLessons(data))
+                    .then((data) => setAllLessons(data))
             }
         }
-    }, [lessons])
+    }, [lessons, allLessons])
 
 
 
@@ -118,9 +123,9 @@ export default function Lessons() {
                         </Flex>
                     </Flex>
 
-                    <BtnLesson txt={'جميع الدروس'} bk={'#061492'} />
+                    <BtnLesson txt={'جميع الدروس'} bk={'#061492'} onClick={() => setLessons(allLessons)} />
                     <BtnLesson txt={'الدروس المكتملة'} bk={'#7a9d1a'} />
-                    <BtnLesson txt={'الدروس التفاعلية'} bk={'#084f4d'} />
+                    <BtnLesson txt={'الدروس المتبقية'} bk={'#084f4d'} onClick={() => setLessons(notStartLessons)} />
                     <BtnLesson txt={'الدروس المفضلة'} bk={'#3c0c6c'} />
 
 
@@ -135,7 +140,7 @@ export default function Lessons() {
                     {lessons !== null ? lessons.map((item, i) => (
                         <Lesson2
                             id={item.id}
-                            color={i === 0 || i === 4 || i === 8 ? '#22078a' : i === 1 || i === 5 || i === 9 ? '#084f4d' : i === 2 || i === 6 ? '#7b9e19' : i === 3 || i === 7 ? '#3d0c6e' : ''}
+                            color={i === 0 || i === 4 || i === 8 ? '#22078a' : i === 1 || i === 5 || i === 9 ? '#084f4d' : i === 2 || i === 6 ? '#7b9e19' : i === 3 || i === 7 || i === 10 ? '#3d0c6e' : ''}
                             title={item.title}
                             info={item.description}
                             minutes={item.minutes}
@@ -192,5 +197,26 @@ const MyBox = ({ name, info, img }) => {
                 <Image src={img} width={140} height={120} borderRadius={8} />
             </Flex>
         </Flex>
+    )
+}
+
+const BtnLesson = ({ txt, bk, onClick }) => {
+
+    return (
+        <Text
+            bgColor={bk}
+            fontFamily={font1}
+            pr={3} pl={3}
+            borderRadius={20}
+            pt={1} pb={1}
+            ml={2}
+
+            height={'36px'}
+            onClick={onClick}
+            cursor={'pointer'}
+            fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}
+
+
+        >{txt}</Text>
     )
 }

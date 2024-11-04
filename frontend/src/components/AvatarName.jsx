@@ -11,7 +11,7 @@ export default function AvatarName() {
                 <Text
                     fontFamily={font1}
                     color={bk2}
-                    fontSize={20}
+                    fontSize={{ base: 20, "3xl": 22 }}
                     ml={2}
                 >{full_name}</Text>
             </Flex>

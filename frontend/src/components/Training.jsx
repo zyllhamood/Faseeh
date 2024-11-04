@@ -12,14 +12,14 @@ export default function Training({ txt, img, onClick }) {
             rounded={'md'}
             borderRadius={10}
             borderWidth={'1px'}
-            height={{ base: '180px', md: '140px' }}
-            width={{ base: '320px', md: '240px' }}
+            height={{ base: '180px', md: '140px', "2xl": "160px", "3xl": "200px" }}
+            width={{ base: '320px', md: '240px', "2xl": "260px", "3xl": "300px" }}
             mt={{ base: 4, md: 0 }}
             cursor={'pointer'}
             onClick={onClick}
         >
             <Text
-                fontSize={16}
+                fontSize={{ base: 16, "2xl": 18, "3xl": 22 }}
                 width={'50%'}
                 textAlign={'center'}
                 fontFamily={font1}

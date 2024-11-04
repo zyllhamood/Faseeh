@@ -15,31 +15,33 @@ class MyLessonsSerializer(serializers.ModelSerializer):
 
 class UserLessonSerializer(serializers.ModelSerializer):
     lesson = serializers.PrimaryKeyRelatedField(queryset=Lesson.objects.all())
+    
     class Meta:
         model = UserLesson
-        fields = ['id','lesson','finished','value']
+        fields = ['id', 'lesson', 'finished', 'value']
     
     def validate(self, data):
         user = self.context['request'].user
         lesson = data['lesson']
         
         # Check if the user already has a UserLesson for this lesson
-        if UserLesson.objects.filter(user=user, lesson=lesson).exists():
-            raise serializers.ValidationError("You have already added this lesson.")
-        
+        user_lesson = UserLesson.objects.filter(user=user, lesson=lesson).first()
+        if user_lesson:
+            # Return the existing lesson ID if it already exists
+            self.context['existing_lesson_id'] = user_lesson.id  # Store ID in context
+            return data  # Continue without raising an error
+
         return data
 
     def create(self, validated_data):
         user = self.context['request'].user
         lesson = validated_data.get('lesson')
-        finished = False
-        value = 0
-
+        
         user_lesson = UserLesson.objects.create(
             user=user,
             lesson=lesson,
-            finished=finished,
-            value=value
+            finished=False,
+            value=0
         )
         return user_lesson
 

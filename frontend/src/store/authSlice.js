@@ -4,7 +4,7 @@ import axios from 'axios';
 export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-        const response = await axios.post('http://192.168.0.134:8000/login/', data, {
+        const response = await axios.post('https://i.zyll.shop/login/', data, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -18,7 +18,7 @@ export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
 export const register = createAsyncThunk('auth/register', async (data, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-        const response = await axios.post('http://192.168.0.134:8000/register/', data, {
+        const response = await axios.post('https://i.zyll.shop/register/', data, {
             headers: {
                 'Content-Type': 'application/json',
 
@@ -34,7 +34,7 @@ export const get_info = createAsyncThunk('auth/info', async (data, thunkAPI) => 
     const { rejectWithValue } = thunkAPI;
     try {
 
-        const response = await axios.get('http://192.168.0.134:8000/profile/', {
+        const response = await axios.get('https://i.zyll.shop/profile/', {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${data}`

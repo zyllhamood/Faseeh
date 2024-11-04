@@ -64,13 +64,26 @@ class JoinLesson(CreateAPIView):
     serializer_class = UserLessonSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        #serializer.save(user=self.request.user)
-        user_lesson = serializer.save(user=self.request.user)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        # Check if the lesson ID is already in the context (lesson exists)
+        existing_lesson_id = serializer.context.get('existing_lesson_id')
+        if existing_lesson_id:
+            # Return 200 with the existing lesson ID
+            return Response({'id': existing_lesson_id}, status=status.HTTP_200_OK)
+        
+        # Proceed with creating a new UserLesson if it doesn't exist
+        user_lesson = serializer.save()
+        
         # Add the UserLesson to the user's profile
-        profile = Profile.objects.get(user=self.request.user)
+        profile, created = Profile.objects.get_or_create(user=request.user)
         profile.lessons.add(user_lesson)
         profile.save()
+        
+        # Return the response for a newly created UserLesson
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class MyLessons(ListAPIView):
     queryset = UserLesson.objects.all()

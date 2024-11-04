@@ -66,9 +66,9 @@ export default function LessonExercises({ resp, showExercises, setShowExercises 
                     color={'#fff'}
                     alignSelf={'center'}
                     mt={6}
-                    width={{ base: '100%', md: '180px' }}
-                    height={'50px'}
-                    fontSize={14}
+                    width={{ base: '100%', md: '180px', "2xl": "200px", "3xl": "220px" }}
+                    height={{ base: '50px', "2xl": "52px", "3xl": "54px" }}
+                    fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}
                     borderRadius={8}
                     _hover={{ opacity: 7 }}
                     onClick={() => setShowExercise2(true)}
@@ -91,7 +91,7 @@ export default function LessonExercises({ resp, showExercises, setShowExercises 
                     width={'86%'}
                     dir='rtl'
                     fontFamily={font1}
-                    fontSize={20}
+                    fontSize={{ base: 20, "2xl": 22, "3xl": 24 }}
                     mt={'120px'}
                     pb={4}
 
@@ -115,13 +115,13 @@ export default function LessonExercises({ resp, showExercises, setShowExercises 
                         textAlign={{ base: 'center', md: 'start' }}
                         mt={{ base: 10, md: 20 }}
                         fontFamily={font1}
-                        fontSize={22}
+                        fontSize={{ base: 22, "2xl": 24, "3xl": 26 }}
                     >قم بإعراب هذه الجملة</Text>
                     <Text
                         p={{ base: 3, md: 0 }}
                         textAlign={{ base: 'center', md: 'start' }}
                         fontFamily={font1}
-                        fontSize={22}
+                        fontSize={{ base: 20, "2xl": 22, "3xl": 24 }}
                         dir='rtl'
                         mt={{ base: 5, md: 10 }}
                     >
@@ -156,7 +156,7 @@ export default function LessonExercises({ resp, showExercises, setShowExercises 
 
                     <Textarea
                         fontFamily={font1}
-                        fontSize={20}
+                        fontSize={{ base: 20, "3xl": 22 }}
                         color="#666666"
                         borderWidth="0px"
                         width="100%"
@@ -205,7 +205,7 @@ const Question = ({ question, options, index, correct_answer, correctChooses, wr
                 width={'86%'}
                 dir='rtl'
                 fontFamily={font1}
-                fontSize={20}
+                fontSize={{ base: 20, "2xl": 22, "3xl": 24 }}
                 mt={'120px'}
                 pb={4}
                 mr={10}
@@ -224,7 +224,7 @@ const Question = ({ question, options, index, correct_answer, correctChooses, wr
             >
                 <Text
                     fontFamily={font1}
-                    fontSize={{ base: 18, md: 20 }}
+                    fontSize={{ base: 18, md: 20, "3xl": 22 }}
                     alignSelf={'center'}
                     textAlign={{ base: 'center', md: 'start' }}
                     bgColor={'#3d0c6e'}
@@ -299,7 +299,7 @@ const Option = ({ txt, number, correct_answer, question, isClicked, setIsCLicked
                 mr={{ base: 0, md: 2 }}
 
             >
-                <Text fontSize={20} fontFamily={font1} color={'white'}>{number}</Text>
+                <Text fontSize={{ base: 20, "3xl": 22 }} fontFamily={font1} color={'white'}>{number}</Text>
             </Flex>
             <Flex
                 boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
@@ -313,7 +313,7 @@ const Option = ({ txt, number, correct_answer, question, isClicked, setIsCLicked
             >
                 <Text
                     fontFamily={font1}
-                    fontSize={18}
+                    fontSize={{ base: 18, "3xl": 20 }}
                     mr={{ base: 0, md: 6 }}
                     textAlign={{ base: 'center', md: 'start' }}
                     p={{ base: 2, md: 0 }}
@@ -329,7 +329,7 @@ const Results = ({ resp, parsing, correctChooses, wrongChooses }) => {
         const fetchData = () => {
             const query = { parsing, correctChooses, wrongChooses, sentence: resp.sentence_for_parsing };
             console.log(query)
-            fetch('http://192.168.0.134:8000/lesson-solve/', {
+            fetch('https://i.zyll.shop/lesson-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -355,8 +355,8 @@ const Results = ({ resp, parsing, correctChooses, wrongChooses }) => {
         }
     }, [respSolve])
     return (
-        <Flex flexDir={'column'} dir='rtl' alignItems={'center'} width={'100%'} alignSelf={'center'} mr={100} color={'black'}>
-            <Text fontFamily={font1} fontSize={22} width={'70%'} mt={6}>الخيارات</Text>
+        <Flex flexDir={'column'} dir='rtl' alignItems={'center'} width={{ base: '100%', "2xl": "90%", "3xl": "80%" }} alignSelf={'center'} mr={100} color={'black'}>
+            <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} width={'70%'} mt={6}>الخيارات</Text>
             <Flex
                 boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
                 width={'70%'}
@@ -386,7 +386,7 @@ const Results = ({ resp, parsing, correctChooses, wrongChooses }) => {
                 ))} */}
             </Flex>
 
-            <Text fontFamily={font1} fontSize={22} width={'70%'} mt={6}>
+            <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} width={'70%'} mt={6}>
                 {respSolve !== null && respSolve.is_correct ? 'احسنت في اعراب الجملة' : 'الاعراب خاطئا '}
 
             </Text>
@@ -401,7 +401,7 @@ const Results = ({ resp, parsing, correctChooses, wrongChooses }) => {
                 overflowY={'scroll'}
             >
                 {respSolve !== null && resp.is_correct !== true && (
-                    <Text fontFamily={font1} dir='rtl' mt={1} color={'black'}>
+                    <Text fontFamily={font1} dir='rtl' mt={1} color={'black'} fontSize={{ base: 16, "2xl": 18, "3xl": 20 }} lineHeight={{ base: 7, "2xl": 8, "3xl": 9 }}>
 
                         <Box as='spin' color={'green'}> {respSolve.correct_answer}</Box>
                         <Box as='spin' color={'black'} mr={2}>{respSolve.why}</Box>

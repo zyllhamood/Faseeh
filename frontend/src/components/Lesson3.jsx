@@ -7,7 +7,8 @@ import { font1 } from '../localVars'
 export default function Lesson3({ index, title, color, finished, value, onClick }) {
     return (
         <Flex
-            width={'220px'}
+            width={{ base: '220px', "3xl": "260px" }}
+            height={{ base: '160px', "3xl": "180px" }}
             boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
             rounded={'md'}
             borderRadius={10}
@@ -17,7 +18,7 @@ export default function Lesson3({ index, title, color, finished, value, onClick 
             alignItems={'center'}
             p={3}
             dir='rtl'
-            height={'160px'}
+
             cursor={'pointer'}
             onClick={onClick}
         >
@@ -27,7 +28,7 @@ export default function Lesson3({ index, title, color, finished, value, onClick 
                 color={'#000'}
                 alignSelf={'start'}
                 mr={4}
-                fontSize={14}
+                fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}
                 mt={2}
             >{title}</Text>
             <Progress
@@ -48,19 +49,20 @@ export default function Lesson3({ index, title, color, finished, value, onClick 
                 fontFamily={font1}
                 bgColor={color}
                 p={0.5}
-                fontSize={6}
+                fontSize={{ base: 6, "2xl": 8 }}
                 borderRadius={20}
                 pl={4}
                 pr={4}
                 mt={3}
                 alignSelf={'end'}
                 color={'#fff'}
+
             >{finished ? 'مكتمل' : 'غير مكتمل'}</Text>
             <Text
                 color={'black'}
                 fontFamily={font1}
                 alignSelf={'start'}
-                fontSize={14}
+                fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}
                 mr={4}
 
             >{finished ? 'أعادة الدرس' : 'اكمل الدرس'}</Text>

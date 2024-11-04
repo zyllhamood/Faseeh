@@ -35,7 +35,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
     useEffect(() => {
         const fetchData = () => {
 
-            fetch('http://192.168.0.134:8000/gmail/')
+            fetch('https://i.zyll.shop/gmail/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -58,7 +58,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
         const fetchData = () => {
 
 
-            fetch('http://192.168.0.134:8000/gmail-solve/', {
+            fetch('https://i.zyll.shop/gmail-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
             <Flex alignSelf={'end'} mt={16} flexDir={'column'} dir='rtl' width={'100%'} display={showAnswer ? 'none' : 'flex'}>
                 <Text
                     fontFamily={font1}
-                    fontSize={26}
+                    fontSize={{ base: 26, "2xl": 28, "3xl": 30 }}
                     alignSelf={'center'}
                 >التدريب الثاني البريد الإكتروني </Text>
                 <Flex
@@ -120,7 +120,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                     mt={10}
                     dir='rtl'
                 >
-                    <Text fontFamily={font1} fontSize={24}>ستظهر لك رسالة بعد قليل المطلوب منك :</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }}>ستظهر لك رسالة بعد قليل المطلوب منك :</Text>
 
                     <TextBox txt={'اقرأ الرسالة بعناية: وتأكد من فهم محتواها '} size={22} />
                     <TextBox txt={'حدد الأخطاء النحوية والإعرابية: '} size={22} />
@@ -136,7 +136,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                 >
                     <Text
                         fontFamily={font1}
-                        fontSize={22}
+                        fontSize={{ base: 22, "2xl": 24, "3xl": 26 }}
 
                         alignSelf={'center'}
                         textAlign={'center'}
@@ -270,10 +270,10 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                                     pointerEvents={resp !== null ? 'auto' : 'none'}
 
                                 >
-                                    <Text fontFamily={font1} dir='ltr' fontSize={14}>9:18 pm</Text>
-                                    <Text fontFamily={font1} fontSize={14}>{resp !== null ? resp.title : <Icon icon={'svg-spinners:3-dots-scale-middle'} width={40} />}</Text>
+                                    <Text fontFamily={font1} dir='ltr' fontSize={{ base: 14, "3xl": 16 }}>9:18 pm</Text>
+                                    <Text fontFamily={font1} fontSize={{ base: 14, "3xl": 16 }}>{resp !== null ? resp.title : <Icon icon={'svg-spinners:3-dots-scale-middle'} width={40} />}</Text>
                                     <Flex justifyContent={'center'} alignItems={'center'}>
-                                        <Text fontFamily={font1} fontSize={14}>علام</Text>
+                                        <Text fontFamily={font1} fontSize={{ base: 14, "3xl": 16 }}>علام</Text>
                                         <Image
                                             w={'30px'}
                                             h={'30px'}
@@ -302,7 +302,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
 
                 <Modal isOpen={isOpen2} onClose={onClose2} >
                     <ModalOverlay />
-                    <ModalContent mt={'200px'} ml={{ base: 2, md: 0 }} mr={{ base: 2, md: '120px' }} maxW={'600px'} pt={4} pb={{ base: 10, md: '120px' }}>
+                    <ModalContent ml={{ base: 2, md: 0 }} mr={{ base: 2, md: '120px' }} maxW={{ base: '600px', "2xl": "700px", "3xl": "800px" }} pt={4} pb={{ base: 10, md: '120px' }}>
 
                         <ModalBody>
                             <Flex
@@ -312,7 +312,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
 
                             >
                                 <Flex alignSelf={'end'} alignItems={'center'}>
-                                    <Text fontFamily={font1} mt={4} ml={4} fontSize={15}>علام</Text>
+                                    <Text fontFamily={font1} mt={4} ml={4} fontSize={{ base: 15, "3xl": 18 }}>علام</Text>
                                     <Flex
                                         justifyContent={'center'}
                                         alignItems={'center'}
@@ -351,6 +351,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                                     leftIcon={<Icon style={{ marginLeft: 10 }} icon={'lets-icons:back'} width={'20px'} />}
                                     onClick={handleOpen3}
                                     fontWeight={'bold'}
+                                    fontSize={{ base: 16, "3xl": 18 }}
                                 >قم بالتصحيح والرد</Button>
                             </Flex>
                         </ModalBody>
@@ -361,7 +362,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
 
                 <Modal isOpen={isOpen3} onClose={onClose3} >
                     <ModalOverlay />
-                    <ModalContent mt={'200px'} ml={{ base: 2, md: 0 }} mr={{ base: 2, md: '120px' }} maxW={'600px'} pt={4} pb={4}>
+                    <ModalContent mt={'200px'} ml={{ base: 2, md: 0 }} mr={{ base: 2, md: '120px' }} maxW={{ base: '600px', "2xl": "640px", "3xl": "680px" }} pt={4} pb={4}>
 
                         <ModalBody p={2}>
                             <Flex
@@ -383,6 +384,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                                     position="relative"
                                     zIndex={1}
                                     ref={messageRef}
+                                    fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}
                                 />
                                 <Flex
                                     borderRadius={12}
@@ -435,7 +437,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                                                 color={'#fff'}
                                                 alignSelf={'center'}
                                                 mr={'28px'}
-                                                fontSize={14}
+                                                fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}
                                             >إرسال</Text>
                                         </Flex>
                                     </Flex>
@@ -448,7 +450,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                 </Modal>
             </Flex >
             <Flex display={showAnswer ? 'flex' : 'none'} alignSelf={'end'} mt={20} flexDir={'column'} dir='rtl' width={'100%'}>
-                <Text fontFamily={font1} fontSize={22} mr={8}>موضع الخطأ مع التصحيح</Text>
+                <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} mr={8}>موضع الخطأ مع التصحيح</Text>
                 <Flex
                     boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
                     width={'96%'}
@@ -467,7 +469,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                     <TextContext wrong={'نحتاج لهذه المعلومات'} correct={'إلى'} why={'الفعل "نحتاج" يتطلب حرف الجر "إلى"'} num={5} />
                 </Flex>
 
-                <Text fontFamily={font1} fontSize={22} mr={16} mt={20}>التوضيح</Text>
+                <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} mr={16} mt={20}>التوضيح</Text>
                 <Flex
                     boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
                     width={{ base: '96%', md: '70%' }}
@@ -494,7 +496,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                     cursor={'pointer'}
                     onClick={handleNext}
                 >
-                    <Text fontFamily={font1} fontSize={26} ml={10}>
+                    <Text fontFamily={font1} fontSize={{ base: 26, "2xl": 28, "3xl": 30 }} ml={10}>
                         التمرين التالي
                     </Text>
                     <Image src={next_png} width={'60px'} transform="rotate(180deg)" />
@@ -515,7 +517,7 @@ const TextBox = ({ txt, size }) => {
 
         >
             <Box height={'6px'} width={'6px'} bgColor={'black'} mt={{ base: 3.5, md: 2 }} ml={3}></Box>
-            <Text dir='rtl' width={{ base: '100%', md: '100%' }} fontFamily={font1} fontSize={size} textAlign={'start'}>{txt}</Text>
+            <Text dir='rtl' width={{ base: '100%', md: '100%' }} fontFamily={font1} fontSize={{ base: size, "2xl": size + 2, "3xl": size + 4 }} textAlign={'start'}>{txt}</Text>
         </Flex>
     )
 }
@@ -524,7 +526,7 @@ const SimpleText = ({ txt }) => {
     return (
         <Text
             fontFamily={font1}
-            fontSize={15}
+            fontSize={{ base: 15, "3xl": 18 }}
             lineHeight={1.8}
 
         >
@@ -537,7 +539,7 @@ const TextContext = ({ wrong, correct, why, num }) => {
     return (
         <Text
             fontFamily={font1}
-            fontSize={22}
+            fontSize={{ base: 22, "2xl": 24, "3xl": 26 }}
             dir='rtl'
             mt={3}
             textAlign={{ base: 'center', md: 'start' }}

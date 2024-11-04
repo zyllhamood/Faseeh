@@ -1,9 +1,10 @@
 
-import { ChakraProvider, Flex, Text, theme } from '@chakra-ui/react';
+import { ChakraProvider, Flex, Text } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import { MenuProvider } from './components/MenuContext'
 import { Routes, Route } from 'react-router-dom';
 import { font1 } from './localVars';
+import theme from "./theme";
 import 'normalize.css';
 import Home from './screens/Home';
 import Profile from './screens/Profile';

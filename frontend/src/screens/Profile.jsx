@@ -32,7 +32,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (lessons === null) {
-            fetch('http://192.168.0.134:8000/my-lessons/', {
+            fetch('https://i.zyll.shop/my-lessons/', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${Cookies.get('access_token')}`
@@ -130,7 +130,7 @@ export default function Profile() {
 
 
                     <Menu>
-                        <InputGroup width={'700px'} display={{ base: 'none', md: 'block' }}>
+                        <InputGroup width={{ md: '700px', "3xl": "1000px" }} display={{ base: 'none', md: 'block' }}>
                             <Input
                                 borderRadius={12}
                                 fontFamily={font1}
@@ -217,7 +217,7 @@ export default function Profile() {
                         </svg>
                     </Flex>
                     <Text
-                        fontSize={{ base: 18, md: 18 }}
+                        fontSize={{ base: 18, md: 18, "2xl": 20, "3xl": 22 }}
                         fontFamily={font1}
                         alignSelf={'center'}
                         mt={1}
@@ -238,7 +238,7 @@ export default function Profile() {
                     <Text
                         fontFamily={font1}
                         color={'black'}
-                        fontSize={20}
+                        fontSize={{ base: 20, "2xl": 24, "3xl": 26 }}
                         alignSelf={'start'}
                     >الدروس</Text>
                 </Flex>
@@ -247,12 +247,7 @@ export default function Profile() {
                     width="84%"
                     overflowX="auto"
                     whiteSpace="nowrap"
-                    css={{
-                        '&::-webkit-scrollbar': {
-                            display: 'none', // Hides the scrollbar in Webkit browsers (Chrome, Safari)
-                        },
-                        scrollbarWidth: 'none', // Hides the scrollbar in Firefox
-                    }}
+
                     pt={2}
                     pb={2}
                     pl={2}
@@ -285,7 +280,7 @@ export default function Profile() {
                     <Text
                         fontFamily={font1}
                         color={'black'}
-                        fontSize={20}
+                        fontSize={{ base: 20, "2xl": 24, "3xl": 26 }}
                         alignSelf={'start'}
                     >التمارين التفاعلية</Text>
                 </Flex>

@@ -19,7 +19,7 @@ export default function RapidParsingChallenge() {
     const [resp, setResp] = useState(null)
     useEffect(() => {
         const fetchData = () => {
-            fetch('http://192.168.0.134:8000/rapid-challange/')
+            fetch('https://i.zyll.shop/rapid-challange/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -314,7 +314,7 @@ const Results = ({ wrongAnswers }) => {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch('http://192.168.0.134:8000/rapid-challenge-solve/', {
+            fetch('https://i.zyll.shop/rapid-challenge-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

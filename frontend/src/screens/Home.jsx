@@ -18,7 +18,7 @@ export default function Home() {
                 <Flex >
                     <Button
 
-                        fontSize={18}
+                        fontSize={{ base: 18, "3xl": 20 }}
                         width={'160px'}
                         padding={6}
                         fontFamily={font1}
@@ -30,21 +30,21 @@ export default function Home() {
                     >تسجيل الدخول</Button>
                 </Flex>
                 <Flex display={{ base: 'none', md: 'flex' }} width={'600px'} justifyContent={'space-between'} alignItems={'center'}>
-                    <Text fontFamily={font1} fontSize={26} fontWeight={'bold'} fontStyle={'normal'}>الدعم</Text>
-                    <Text fontFamily={font1} fontSize={26} fontWeight={'bold'}>المسار التعليمي</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 26, "3xl": 28 }} fontWeight={'bold'} fontStyle={'normal'}>الدعم</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 26, "3xl": 28 }} fontWeight={'bold'}>المسار التعليمي</Text>
 
                     <Flex flexDir={'column'} alignItems={'center'}>
-                        <Text fontFamily={font1} fontSize={26} fontWeight={'bold'}>تعرف علينا</Text>
+                        <Text fontFamily={font1} fontSize={{ base: 26, "3xl": 28 }} fontWeight={'bold'}>تعرف علينا</Text>
                         <Box height={'4px'} borderRadius={12} bgColor={'#1F0F5D'} w={'120px'}></Box>
                     </Flex>
-                    <Text fontFamily={font1} fontSize={26} fontWeight={'bold'}>الرئيسية</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 26, "3xl": 28 }} fontWeight={'bold'}>الرئيسية</Text>
 
 
 
 
                 </Flex>
                 <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
-                    <Text fontFamily={font2} fontSize={40} color={fr1} mt={8} fontWeight={'bold'}>فصيح</Text>
+                    <Text fontFamily={font2} fontSize={{ base: 40, "2xl": 42, "3xl": 44 }} color={fr1} mt={8} fontWeight={'bold'}>فصيح</Text>
                     <svg width="50" height="50" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_9_2)">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M39.9995 39.9995V52.4995C39.9995 53.88 41.1188 54.9995 42.4995 54.9995H54.9995C56.38 54.9995 57.4995 53.88 57.4995 52.4995V39.9995C57.4995 38.6188 56.38 37.4995 54.9995 37.4995H42.4995C41.1188 37.4995 39.9995 38.6188 39.9995 39.9995ZM3.12451 49.9995V62.4995C3.12451 63.88 4.2438 64.9995 5.62451 64.9995H18.1245C19.5052 64.9995 20.6245 63.88 20.6245 62.4995V49.9995C20.6245 48.6188 19.5052 47.4995 18.1245 47.4995H5.62451C4.2438 47.4995 3.12451 48.6188 3.12451 49.9995Z" fill="white" />
@@ -65,7 +65,7 @@ export default function Home() {
                 <Text
                     fontWeight={'bold'}
                     fontFamily={'Cairo'}
-                    fontSize={34}
+                    fontSize={{ base: 34, "2xl": 36, "3xl": 38 }}
                     mt={{ base: '40px', md: '100px' }}
                     textAlign={'center'}
                 >
@@ -74,7 +74,7 @@ export default function Home() {
                 <Text
                     fontWeight={'bold'}
                     fontFamily={'Cairo'}
-                    fontSize={34}
+                    fontSize={{ base: 34, "2xl": 36, "3xl": 38 }}
                     textAlign={'center'}
                 >
                     وبأسلوب يناسب <span style={{ color: fr1 }}>الجميع!</span>
@@ -85,7 +85,7 @@ export default function Home() {
                 width={{ base: '78%', md: '60%' }}
                 alignSelf={'center'}
                 fontFamily={font2}
-                fontSize={28}
+                fontSize={{ base: 28, "2xl": 30, "3xl": 32 }}
                 textAlign={'center'}
                 color={fr2}
                 mt={10}
@@ -96,9 +96,9 @@ export default function Home() {
             </Text>
 
             <Button
-                mt={10}
-                fontSize={22}
-                width={'300px'}
+                mt={{ base: 10, "2xl": 12, "3xl": '60px' }}
+                fontSize={{ base: 22, "3xl": 24 }}
+                width={{ base: '300px', "3xl": "340px" }}
                 padding={6}
                 fontFamily={font1}
                 bgColor={bk2}

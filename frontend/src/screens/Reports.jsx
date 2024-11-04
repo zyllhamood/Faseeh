@@ -46,7 +46,7 @@ export default function Reports() {
     const [mistakes, setMistakes] = useState(null);
     useEffect(() => {
         if (resp === null) {
-            fetch('http://192.168.0.134:8000/report/')
+            fetch('https://i.zyll.shop/report/')
                 .then((response) => response.json())
                 .then((data) => {
                     setData(data.response);

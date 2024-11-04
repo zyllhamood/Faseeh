@@ -53,7 +53,7 @@ export default function Exercises() {
 
                 <Text
                     fontFamily={font1}
-                    fontSize={26}
+                    fontSize={{ base: 22, "2xl": 24, "3xl": 26 }}
                     color={'#000'}
                     mt={20}
                 >المسار التدريبي</Text>

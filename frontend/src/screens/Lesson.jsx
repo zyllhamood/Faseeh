@@ -32,7 +32,7 @@ export default function Lesson() {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch(`http://192.168.0.134:8000/lesson/${id}/`)
+            fetch(`https://i.zyll.shop/lesson/${id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -55,7 +55,7 @@ export default function Lesson() {
 
     useEffect(() => {
         if (voice === null && resp !== null) {
-            fetch(`http://192.168.0.134:8000/voice/${id}/`, {
+            fetch(`https://i.zyll.shop/voice/${id}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ export default function Lesson() {
 
     useState(() => {
         if (respVideo === null) {
-            fetch(`http://192.168.0.134:8000/video/${id}/`)
+            fetch(`https://i.zyll.shop/video/${id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     setRespVideo(data);
@@ -131,7 +131,7 @@ export default function Lesson() {
                     dir='rtl'
                     mt={20}
                     width={'86%'}
-                    fontSize={20}
+                    fontSize={{ base: 20, "2xl": 22, "3xl": 24 }}
                     display={showLesson ? 'block' : 'none'}
                     pb={10}
 
@@ -159,6 +159,7 @@ export default function Lesson() {
                     mb={5}
                     dir='rtl'
                     display={showLesson ? 'flex' : 'none'}
+
                 >
                     <OptionLesson
                         txt={'مقطع فيديو'}
@@ -188,12 +189,12 @@ export default function Lesson() {
                 {/* /////////////////////// */}
                 {type === 'video' && respVideo !== null ? (
                     <AspectRatio
-                        maxW='560px'
+
                         ratio={1}
                         alignSelf='center'
                         mt={{ base: 0, md: 16 }}
-                        width={{ base: '340px', md: '540px' }}
-                        height={{ base: '220px', md: '320px' }}
+                        width={{ base: '340px', md: '540px', "2xl": "580px", "3xl": "620px" }}
+                        height={{ base: '220px', md: '320px', "2xl": "360px", "3xl": "400px" }}
                         borderWidth={'10px'}
                         borderColor={'black'}
                         borderRadius={8}
@@ -217,8 +218,9 @@ export default function Lesson() {
                         borderWidth={'6px'}
                         borderColor={'black'}
                         borderRadius={8}
-                        width={{ base: '340px', md: '540px' }}
-                        height={{ base: '220px', md: '320px' }}
+                        width={{ base: '340px', md: '540px', "2xl": "580px", "3xl": "620px" }}
+                        height={{ base: '220px', md: '320px', "2xl": "360px", "3xl": "400px" }}
+
                         mt={{ base: 0, md: 16 }}
                         overflowY={'scroll'}
                         alignSelf={'center'}
@@ -228,7 +230,7 @@ export default function Lesson() {
 
                     >
 
-                        <Text fontSize={18} lineHeight={8} fontFamily={font1}>{resp !== null && resp.text_content}</Text>
+                        <Text fontSize={{ base: 18, "2xl": 20, "3xl": 22 }} lineHeight={{ base: 8, "2xl": 9, "3xl": 10 }} fontFamily={font1}>{resp !== null && resp.text_content}</Text>
                     </Flex>
                 ) : type === 'text' && (
                     <Flex alignSelf={'center'}>
@@ -239,7 +241,7 @@ export default function Lesson() {
                 {type === 'voice' && (
                     <Flex
                         alignSelf={'center'}
-                        height={{ base: '220px', md: '320px' }}
+                        height={{ base: '220px', md: '320px', "2xl": "360px", "3xl": "400px" }}
                         width={'100%'}
                         justifyContent={'center'}
                         mb={{ base: 0, md: 16 }}
@@ -251,7 +253,7 @@ export default function Lesson() {
                 )}
 
                 <Flex
-                    width={{ base: '340px', md: '420px' }}
+                    width={{ base: '340px', md: '420px', "2xl": "440px", "3xl": "460px" }}
                     justifyContent={'space-between'}
                     alignItems={'center'}
                     alignSelf={'center'}
@@ -263,14 +265,15 @@ export default function Lesson() {
                         bgColor={'#22078A'}
                         color={'#fff'}
                         mt={6}
-                        width={{ base: '100%', md: '180px' }}
-                        height={'50px'}
-                        fontSize={14}
+                        width={{ base: '100%', md: '180px', "2xl": "200px", "3xl": "220px" }}
+                        height={{ base: '50px', "2xl": "52px", "3xl": "54px" }}
+                        fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}
                         fontWeight={'bold'}
                         borderRadius={8}
                         _hover={{ opacity: 7 }}
                         onClick={onOpen}
                         display={showLesson ? 'block' : 'none'}
+
                     >عرض ملخص الدرس</Button>
                     <Button
                         fontFamily={font1}
@@ -278,9 +281,9 @@ export default function Lesson() {
                         fontWeight={'bold'}
                         color={'#fff'}
                         mt={6}
-                        width={{ base: '100%', md: '180px' }}
-                        height={'50px'}
-                        fontSize={14}
+                        width={{ base: '100%', md: '180px', "2xl": "200px", "3xl": "220px" }}
+                        height={{ base: '50px', "2xl": "52px", "3xl": "54px" }}
+                        fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}
                         borderRadius={8}
                         _hover={{ opacity: 7 }}
                         onClick={handleNext}
@@ -291,8 +294,8 @@ export default function Lesson() {
 
                 <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalContent
-                        mt={'200px'}
-                        mr={{ base: 0, md: '120px' }}
+                        mt={{ base: '200px', "2xl": "120px", "3xl": "200px" }}
+                        mr={{ base: 0, md: '120px', "2xl": "140px", "3xl": "300px" }}
                         maxW={{ base: '300px', md: '600px' }}
                         pt={4}
                         pb={{ base: '20px', md: '120px' }}
@@ -301,7 +304,7 @@ export default function Lesson() {
                         <ModalCloseButton />
                         <ModalHeader fontFamily={font1} mt={10} fontWeight={'bold'}>{respVideo !== null && respVideo.name}</ModalHeader>
                         <ModalBody>
-                            <Text fontFamily={font1} fontSize={18} >{resp !== null && resp.summary}</Text>
+                            <Text fontFamily={font1} fontSize={{ base: 18, "3xl": 20 }} lineHeight={{ base: 8, "3xl": 9 }} >{resp !== null && resp.summary}</Text>
                         </ModalBody>
 
 
@@ -337,6 +340,7 @@ const OptionLesson = ({ txt, active, onClick, pointerEvents, opacity }) => {
             <Text
                 fontFamily={font1}
                 ml={pointerEvents === 'none' ? 2 : 0}
+                fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}
             >{txt}</Text>
             {pointerEvents === 'none' && <Icon icon={'svg-spinners:wind-toy'} width={20} />}
         </Flex >

@@ -19,7 +19,7 @@ import {
 export default function Lesson2({ id, color, title, minutes, info }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const handleClick = (id, type) => {
-        fetch('http://192.168.0.134:8000/join-lesson/', {
+        fetch('https://i.zyll.shop/join-lesson/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export default function Lesson2({ id, color, title, minutes, info }) {
             }),
         })
             .then((response) => {
-                if (response.status === 201) {
+                if (response.status === 201 || response.status === 200) {
                     return response.json(); // return the promise
                 } else {
                     console.error('Failed to join lesson. Status code:', response.status);
@@ -57,7 +57,7 @@ export default function Lesson2({ id, color, title, minutes, info }) {
         >
             <Flex width={'50px'} bgColor={color} height={{ base: '260px', md: '200px' }} borderTopRightRadius={8} borderBottomRightRadius={8}></Flex>
             <Flex width={'70%'} flexDir={'column'}>
-                <Text fontSize={18} fontFamily={font1} mt={10} mr={8}>{title}</Text>
+                <Text fontSize={{ base: 18, "2xl": 20, "3xl": 22 }} fontFamily={font1} mt={10} mr={8}>{title}</Text>
                 <Text
                     fontFamily={font1}
                     mt={{ base: 10, md: 8 }}
@@ -65,6 +65,7 @@ export default function Lesson2({ id, color, title, minutes, info }) {
                     width={{ base: '200px', md: '100%' }}
                     alignSelf={'center'}
                     textAlign={'center'}
+                    fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}
                 >{info}</Text>
             </Flex>
             {/* <Flex width={'5%'} bgColor={'silver'} >
@@ -87,21 +88,21 @@ export default function Lesson2({ id, color, title, minutes, info }) {
                     alignItems={'center'}
                     color={'white'}
                 >
-                    <Text fontSize={18} fontFamily={font1}>{minutes}</Text>
+                    <Text fontSize={{ base: 18, "2xl": 20, "3xl": 22 }} fontFamily={font1}>{minutes}</Text>
 
                 </Flex>
                 <Text ml={{ base: 4, md: 0 }} fontFamily={font1} fontSize={14} mt={1}>دقيقة</Text>
 
                 <Flex
                     height={'30px'}
-                    width={'100px'}
+                    width={{ base: '100px', "2xl": "120px", "3xl": "140px" }}
                     ml={{ base: 12, md: '180px' }}
 
                     cursor={'pointer'}
                     onClick={onOpen}
                     mt={{ base: '100px', md: 0 }}
                 >
-                    <Text fontFamily={font1}>إبدأ الأن</Text>
+                    <Text fontFamily={font1} fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}>إبدأ الأن</Text>
                     <Image
                         width={'26px'}
                         height={'26px'}
@@ -112,7 +113,7 @@ export default function Lesson2({ id, color, title, minutes, info }) {
 
                 <Modal isOpen={isOpen} onClose={onClose} >
                     <ModalOverlay />
-                    <ModalContent mt={{ base: '20px', md: '200px' }} mr={{ base: '0px', md: '120px' }} maxW={{ base: '360px', md: '680px' }} pt={8} pb={{ base: 6, md: 16 }}>
+                    <ModalContent mt={{ base: '20px', md: '200px' }} mr={{ base: '0px', md: '120px' }} maxW={{ base: '360px', md: '680px', "2xl": "740px", "3xl": "800px" }} pt={8} pb={{ base: 6, md: 16 }}>
                         <ModalHeader textAlign={'center'} fontFamily={font1} fontWeight={'bold'}>اختر طريقة عرض الدرس</ModalHeader>
                         <ModalBody>
                             <Grid
@@ -171,7 +172,7 @@ const Choose = ({ txt, img, onClick }) => {
     return (
         <Flex
             flexDir={'column'}
-            width={{ base: '160px', md: '180px' }}
+            width={{ base: '160px', md: '180px', "2xl": "200px", "3xl": "220px" }}
             height={'200px'}
             boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
             borderRadius={16}
@@ -181,7 +182,7 @@ const Choose = ({ txt, img, onClick }) => {
 
 
         >
-            <Text fontFamily={font1} mt={6} fontSize={14}>{txt}</Text>
+            <Text fontFamily={font1} mt={6} fontSize={{ base: 14, "2xl": 16, "3xl": 18 }}>{txt}</Text>
             <Image
                 src={img}
                 width={'50px'}
@@ -194,12 +195,13 @@ const Choose = ({ txt, img, onClick }) => {
                 bgColor={'#22078A'}
                 color={'#fff'}
                 mt={6}
-                width={'120px'}
-                height={'30px'}
+                width={{ base: '120px', "2xl": "140px", "3xl": "160px" }}
+                height={{ base: '30px', "2xl": "34px", "3xl": "38px" }}
                 borderRadius={8}
                 _hover={{ opacity: 7 }}
                 fontWeight={'bold'}
                 onClick={onClick}
+                fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}
             >إبدا الدرس</Button>
         </Flex>
     )
