@@ -483,9 +483,11 @@ def ask_ai(qq):
 @api_view(['POST'])
 def rapid_challange_solve(request):
     data_array = request.data
-    qq = f'سأرسل لك داتا json وهي عباره عن سوال في الاعراب واجابه خاطئه لذا اريدك ان ترسل داتا عباره عن question(السوال) answer(الاجابه الصحيحه) why(التوضيح) وتاكد من جعل الرد فقط json وهذه هي الداتا {data_array}'
+    qq = f'سأرسل لك داتا json وهي عباره عن سوال في الاعراب واجابه خاطئه لذا اريدك ان ترسل داتا عباره عن question(السوال) choose_answer(الاجابه التي اختارها) correc_answer(الاجابه الصحيحه) why(التوضيح) وتاكد من جعل الرد فقط json وهذه هي الداتا {data_array}'
     try:
         response = ask_ai(qq)
+        res = 5 - len(data_array)
+        summary = Summary.objects.get_or_create(user=request.user,title='تحدي الإعراب السريع', result=f'{res}\\5',data=response)
     except:
         response = None
     
@@ -495,9 +497,11 @@ def rapid_challange_solve(request):
 @api_view(['POST'])
 def full_blank_solve(request):
     data_array = request.data
-    qq = f'سأرسل لك داتا json وهي عباره عن سوال في الاعراب والنحو واجابه خاطئه لذا اريدك ان ترسل داتا عباره عن question(السوال) answer(الاجابه الصحيحه) why(التوضيح) وتاكد من جعل الرد فقط json وهذه هي الداتا {data_array}'
+    qq = f'سأرسل لك داتا json وهي عباره عن سوال في الاعراب والنحو واجابه خاطئه لذا اريدك ان ترسل داتا عباره عن question(السوال) choose_answer(الاجابه التي اختارها) correct_answer(الاجابه الصحيحه) why(التوضيح) وتاكد من جعل الرد فقط json وهذه هي الداتا {data_array}'
     try:
         response = ask_ai(qq)
+        res = 4 - len(data_array)
+        summary = Summary.objects.get_or_create(user=request.user,title='أكمل الفراغ', result=f'{res}\\4',data=response)
     except:
         response = None
     resp = {"resp": response}
@@ -517,13 +521,26 @@ def daily_conversation_solve(request):
 
     return JsonResponse(resp,safe=False)
 
+def get_correct_answers_cards(wrong_chooses, chooses):
+    # Convert the list of dictionaries to sets based on 'word' keys to filter unique entries
+    wrong_words = {item['word'] for item in wrong_chooses}
+    # Filter out the entries in chooses where the 'word' key does not exist in wrong_words
+    correct_answers = [item for item in chooses if item['word'] not in wrong_words]
+    return correct_answers
+
 @api_view(['POST'])
 def cards_solve(request):
     chooses = request.data['chooses']
     sentence = request.data['sentence']
-    qq = f'لدي جمله في اللغة العربيه للاعراب "{sentence}" ولدي هذه الاجابات في شكل json لذا اريدك لن تتاكد من الاجابات اريد ان ترى اذا الكلمه واعرابها صحيح او لا "{chooses}" واريد ان يكون الرد فقط داتا json اريد الرد في هذا الشكل wrong_chooses(مصفوفه للكلمات التي كان اعرابها خاطئ وان لم يوجد فاجعلها فاضيه وان كان يوجد اجعل لكل item ان يحتوي على word(الكلمه) correct_parsing(الاعراب الصحيح) why(توضيح بسيط ليتم الفهم) ) وايضا is_all_correct(ستكون اما true او false)'
+    qq = f'لدي جمله في اللغة العربيه للاعراب "{sentence}" ولدي هذه الاجابات في شكل json لذا اريدك لن تتاكد من الاجابات اريد ان ترى اذا الكلمه واعرابها صحيح او لا "{chooses}" واريد ان يكون الرد فقط داتا json اريد الرد في هذا الشكل wrong_chooses(مصفوفه للكلمات التي كان اعرابها خاطئ وان لم يوجد فاجعلها فاضيه وان كان يوجد اجعل لكل item ان يحتوي على word(الكلمه) parsing(الاعراب الذي تم وضعه سابقا) correct_parsing(الاعراب الصحيح) why(توضيح بسيط ليتم الفهم) ) وايضا is_all_correct(ستكون اما true او false)'
     try:
         response = ask_ai(qq)
+        correct_answers = get_correct_answers_cards(response['wrong_chooses'], chooses)
+        res = len(correct_answers)
+        response['correct_answers'] = correct_answers
+        response['sentence'] = sentence
+        summary = Summary.objects.get_or_create(user=request.user,title='سحب البطاقات', result=f'{res}\\4',data=response)
+        
     except:
         response = None
     resp = {"resp": response}
@@ -554,6 +571,23 @@ def lesson_solve(request):
     try:
         response = ask_ai(qq)
     except:
+        response = None
+    resp = {"resp": response}
+    return JsonResponse(resp,safe=False)
+
+@api_view(['POST'])
+def chooses_solve(request):
+    correctChooses = request.data['correctChooses']
+    wrongChooses = request.data['wrongChooses']
+    
+    qq = f'سارسل لك بيانات اسئلة واجابات في اللغة العربية ستكون البيانات عباره عن مصفوفه للخيارات الصحيحه "{correctChooses}" الذي تحتوي على question, answer وبيانات للخيارات الخاطئة "{wrongChooses}" ستكون question, choose_answer, correct_answer واريد منك ان ترجع لي داتا json وان تحتوي على مصفوفه من اربع عناصر وكل عنصر يحتوي على question(السوال), choose_answer(الخيار الذي اختاره سواء كان صحيحا او غير صحيح), correct_answer(اذا كان الجواب غير صحيح فسيكون الخيار الصحيح هنا واذا كان حصحيا ايضا سيكون هنا), is_correct(اذا كان حل السوال صحيحا او لا اعتمادا على الداتا التي ارسلتها لك), options(جميع الخيارات التي في السوال) explain(اذا كان الجواب خاطئا سيكون توضيح لماذا خاطئا واذا كان الجواب صحيحا سيكون توضيح لماذا صحيحا) ولا اريد منك اي تفصايل ثانية فقط الرد json'
+    try:
+        response = ask_ai(qq)
+        print(response)
+        res = len(correctChooses)
+        summary = Summary.objects.get_or_create(user=request.user,title='اختر الإجابة الصحيحة', result=f'{res}\\4',data=response)
+    except Exception as e:
+        print(str(e))
         response = None
     resp = {"resp": response}
     return JsonResponse(resp,safe=False)
@@ -621,3 +655,17 @@ def increment_completed_exercises(request):
     profile = get_object_or_404(Profile, user=request.user)
     profile.completed_exercises += 1
     profile.save()
+
+class UserSummaryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user  # Get the user from the request
+        summaries = Summary.objects.filter(user=user).order_by('-id')  # Filter summaries for the authenticated user
+        serializer = SummarySerializer(summaries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+def summary_view(request,id):
+    summary = get_object_or_404(Summary, id=id)
+    resp = summary.data
+    return JsonResponse(resp,safe=False)

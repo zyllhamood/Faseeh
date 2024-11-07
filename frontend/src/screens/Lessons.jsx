@@ -19,7 +19,7 @@ export default function Lessons() {
     useEffect(() => {
         if (lessons === null) {
             if (access_token !== null || access_token !== undefined || access_token !== "") {
-                fetch('https://i.zyll.shop/lessons/', {
+                fetch('http://192.168.8.168:8000/lessons/', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + access_token
@@ -33,7 +33,7 @@ export default function Lessons() {
             }
 
             if (allLessons === null) {
-                fetch('https://i.zyll.shop/lessons/')
+                fetch('http://192.168.8.168:8000/lessons/')
                     .then((response) => response.json())
                     .then((data) => setAllLessons(data))
             }

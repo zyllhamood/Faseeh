@@ -20,6 +20,9 @@ import Register from './screens/Register';
 import RapidParsingChallenge from './screens/RapidParsingChallange';
 import FullBlank from './screens/FullBlank';
 import DailyConversation from './screens/DailyConversation';
+import Summary from './screens/Summary';
+import Results from './screens/Results';
+
 function App() {
   const dispatch = useDispatch();
   const access_token = Cookies.get('access_token');
@@ -53,6 +56,8 @@ function App() {
             <Route path="/rapid-parsing-challange" element={<RapidParsingChallenge />} />
             <Route path="/full-blank" element={<FullBlank />} />
             <Route path="/daily-conversation" element={<DailyConversation />} />
+            <Route path="/summary" element={<Summary />} />
+            <Route path="/summary/:t/:id" element={<Results />} />
           </Routes>
         </Flex>
       </MenuProvider>

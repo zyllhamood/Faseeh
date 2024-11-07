@@ -29,6 +29,7 @@ urlpatterns = [
     path('cards-solve/',cards_solve),
     path('lesson-solve/',lesson_solve),
     path('gmail-solve/',gmail_solve),
+    path('chooses-solve/',chooses_solve),
 
     #path('voice/<int:pk>/',voice_view),
     path('voice/<int:pk>/',voice_view_new),
@@ -37,6 +38,9 @@ urlpatterns = [
 
     path('gmail/',gmail_view),
 
-    path('tested/',tested)
+    path('tested/',tested),
+
+    path('summary/',UserSummaryView.as_view()),
+    path('summary/<int:id>/',summary_view),
     
 ]

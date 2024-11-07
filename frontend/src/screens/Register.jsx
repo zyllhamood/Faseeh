@@ -60,7 +60,6 @@ export default function Register() {
         const data = { username, password, full_name, avatar: '' }
         dispatch(register(data));
     }
-    console.log(typeof respRegister)
     useEffect(() => {
         if (respRegister !== null) {
             try {

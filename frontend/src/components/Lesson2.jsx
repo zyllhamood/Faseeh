@@ -19,7 +19,7 @@ import {
 export default function Lesson2({ id, color, title, minutes, info }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const handleClick = (id, type) => {
-        fetch('https://i.zyll.shop/join-lesson/', {
+        fetch('http://192.168.8.168:8000/join-lesson/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default function Lesson2({ id, color, title, minutes, info }) {
                 if (data) {
                     const lesson_id = data.id;
 
-                    window.location.href = `http://localhost:3000/lesson/${lesson_id}/${type}/`
+                    window.location.href = `http://192.168.8.168:3000/lesson/${lesson_id}/${type}/`
                 }
             })
             .catch((error) => {

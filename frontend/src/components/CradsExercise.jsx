@@ -24,7 +24,7 @@ export default function CradsExercise({ page, setPage, setNumLine }) {
 
     useEffect(() => {
         const fetchData = () => {
-            fetch('https://i.zyll.shop/cards/')
+            fetch('http://192.168.8.168:8000/cards/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -123,7 +123,7 @@ const Results = ({ page, setPage, resp, chooses }) => {
         const fetchData = () => {
             const query = { sentence: resp.sentence, chooses: chooses };
 
-            fetch('https://i.zyll.shop/cards-solve/', {
+            fetch('http://192.168.8.168:8000/cards-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -145,8 +145,7 @@ const Results = ({ page, setPage, resp, chooses }) => {
                 });
         }
         if (respSolve === null && page === 'cards_finished') {
-            console.log('page')
-            console.log(page)
+
             fetchData();
         }
     }, [respSolve])
@@ -162,37 +161,12 @@ const Results = ({ page, setPage, resp, chooses }) => {
 
             alignItems={'center'}
         >
-            {respSolve !== null && respSolve.is_all_correct ? (
-                <>
+            <Image
+                src={success_png}
+                width={'180px'}
+            />
+            <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}>أحسنت</Text>
 
-                    <Image
-                        src={success_png}
-                        width={'180px'}
-                    />
-                    <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}>أحسنت</Text>
-
-
-                </>
-            ) : (
-                <Flex
-                    boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-                    width={'70%'}
-                    height={'200px'}
-                    mt={4}
-                    borderRadius={12}
-                    flexDir={'column'}
-                    p={5}
-                    overflowY={'scroll'}
-                >
-                    {respSolve !== null && respSolve.wrong_chooses.map((item) => (
-                        <Text fontFamily={font1} dir='rtl' mt={1} color={'black'} fontSize={{ base: 16, "2xl": 18, "3xl": 20 }}>
-                            {item.word} ?
-                            <Box as='spin' color={'green'}> {item.correct_parsing}</Box>
-                            <Box as='spin' color={'silver'} mr={2}>{item.why}</Box>
-                        </Text>
-                    ))}
-                </Flex>
-            )}
             <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}> والأن انتقل إلى التمرين الثاني </Text>
             <Image
                 src={next_png}
@@ -281,9 +255,7 @@ function Cards({ page, setPage, data, finished, setFinished, chooses }) {
 
         // Log the content of the dragged card and the destination label directly from droppableId
         chooses.push({ "word": destination.droppableId, "parsing": draggedCard.parsing })
-        console.log(`Dragged card: ${draggedCard.parsing}`);
-        console.log(`Dropped in: ${destination.droppableId}`);
-        console.log(chooses)
+
         // Update the sentence structure based on the droppableId
         const updatedSentence = { ...sentence };
         updatedSentence[destination.droppableId] = draggedCard;
@@ -307,7 +279,7 @@ function Cards({ page, setPage, data, finished, setFinished, chooses }) {
                     {data !== null && (
                         <>
 
-                            <Flex justify="space-between">
+                            <Flex justifyContent={'space-between'} >
                                 <DropArea id={data['options'][0]['option']} label={data['options'][0]['option']} card={sentence[data['options'][0]['option']]} />
                                 <DropArea id={data['options'][1]['option']} label={data['options'][1]['option']} card={sentence[data['options'][1]['option']]} />
                             </Flex>
@@ -376,8 +348,19 @@ function DropArea({ id, label, card }) {
     return (
         <Droppable droppableId={id}>
             {(provided) => (
-                <Flex alignItems={'center'} flexDir={{ base: 'column', md: 'row' }}>
-                    <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} pr={{ base: 0, md: 0 }} width={{ base: 'auto', md: '120px' }}>{label}</Text>
+                <Flex
+                    alignItems={'center'}
+                    flexDir={{ base: 'column', md: 'row' }}
+
+                >
+                    <Text
+                        fontFamily={font1}
+                        fontSize={{ base: 22, "2xl": 24, "3xl": 26 }}
+                        pr={{ base: 0, md: 0 }}
+                        width={{ base: '100px', md: '120px' }}
+                        textAlign={'center'}
+                    >{label}</Text>
+
                     <Flex
                         ref={provided.innerRef}
                         {...provided.droppableProps}

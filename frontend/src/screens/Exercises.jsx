@@ -20,7 +20,6 @@ export default function Exercises() {
 
         }
     }, [page])
-    console.log(page)
     return (
         <Flex
             direction={{ base: 'column', md: "row-reverse" }}

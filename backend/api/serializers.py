@@ -80,3 +80,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         f = name.split(' ')[0]
         default_avatar_url = f"https://ui-avatars.com/api/?name={f}"
         return default_avatar_url
+    
+class SummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary
+        fields = ['id', 'title', 'result']

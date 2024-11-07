@@ -15,7 +15,7 @@ export default function DailyConversation() {
     const [answer, setAnswer] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch('https://i.zyll.shop/daily-conversation/')
+            fetch('http://192.168.8.168:8000/daily-conversation/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -346,8 +346,8 @@ const Results = ({ resp, answer }) => {
     useEffect(() => {
         const fetchData = () => {
             const query = { questions: resp.questions, answer: answer };
-            console.log(query)
-            fetch('https://i.zyll.shop/daily-conversation-solve/', {
+
+            fetch('http://192.168.8.168:8000/daily-conversation-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

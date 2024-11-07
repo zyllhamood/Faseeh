@@ -25,8 +25,7 @@ export default function LineExercises({ numLine }) {
     const Box2xl = '40px';
     const Box3xl = '44px';
 
-    console.log('numLine')
-    console.log(numLine)
+
     return (
         <Flex alignItems={'center'} dir='rtl' mt={12} alignSelf={'end'} mr={{ base: 8, md: 10, "2xl": 12, "3xl": 14 }} >
             <Box bgColor={bk_done} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8}></Box>

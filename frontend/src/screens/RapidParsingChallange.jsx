@@ -7,6 +7,7 @@ import goal from '../assets/images/goal.png'
 import { Icon } from '@iconify/react'
 import MenuNav from '../components/MenuNav';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom'
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -19,7 +20,7 @@ export default function RapidParsingChallenge() {
     const [resp, setResp] = useState(null)
     useEffect(() => {
         const fetchData = () => {
-            fetch('https://i.zyll.shop/rapid-challange/')
+            fetch('http://192.168.8.168:8000/rapid-challange/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -267,8 +268,6 @@ const Question = ({ locked, setLocked, timeLeft, page, setPage, resp, wrongAnswe
                     isClosable: true,
                 })
 
-                console.log('Wrong answers')
-                console.log(wrongAnswers);
             }
             else {
                 setNum(num + 1);
@@ -312,9 +311,10 @@ const Question = ({ locked, setLocked, timeLeft, page, setPage, resp, wrongAnswe
 
 const Results = ({ wrongAnswers }) => {
     const [resp, setResp] = useState(null);
+    const navigate = useNavigate()
     useEffect(() => {
         const fetchData = () => {
-            fetch('https://i.zyll.shop/rapid-challenge-solve/', {
+            fetch('http://192.168.8.168:8000/rapid-challenge-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -340,44 +340,47 @@ const Results = ({ wrongAnswers }) => {
         }
     }, [resp])
     return (
-        <Flex flexDir={'column'} dir='rtl' alignItems={'center'} width={'100%'}>
-            <Text fontFamily={font1} fontSize={22} width={'70%'} mt={10}>الإجابات الخاطئة التصحيح:</Text>
-            <Flex
-                boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-                width={'70%'}
-                height={'200px'}
-                mt={4}
-                borderRadius={12}
-                flexDir={'column'}
-                p={5}
-            >
-                {wrongAnswers.map((item) => (
-                    <Text
-                        fontFamily={font1}
-                        dir='rtl'
+        // <Flex flexDir={'column'} dir='rtl' alignItems={'center'} width={'100%'}>
+        //     <Text fontFamily={font1} fontSize={22} width={'70%'} mt={10}>الإجابات الخاطئة التصحيح:</Text>
+        //     <Flex
+        //         boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
+        //         width={'70%'}
+        //         height={'200px'}
+        //         mt={4}
+        //         borderRadius={12}
+        //         flexDir={'column'}
+        //         p={5}
+        //     >
+        //         {wrongAnswers.map((item) => (
+        //             <Text
+        //                 fontFamily={font1}
+        //                 dir='rtl'
 
-                        mt={1}
-                    >{item.question}  <Box mr={2} as='spin' color={'red'}>{item.answer}</Box></Text>
-                ))}
-            </Flex>
+        //                 mt={1}
+        //             >{item.question}  <Box mr={2} as='spin' color={'red'}>{item.answer}</Box></Text>
+        //         ))}
+        //     </Flex>
 
-            <Text fontFamily={font1} fontSize={22} width={'70%'} mt={6}>التوضيح:</Text>
-            <Flex
-                boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-                width={'70%'}
-                height={'200px'}
-                mt={4}
-                borderRadius={12}
-                flexDir={'column'}
-                p={5}
-                overflowY={'scroll'}
-            >
-                {resp !== null && resp.map((item) => (
-                    <Text fontFamily={font1} dir='rtl' mt={1}>
-                        {item.question} <Box as='spin' color={'green'}>{item.answer}</Box> : {item.why}
-                    </Text>
-                ))}
-            </Flex>
+        //     <Text fontFamily={font1} fontSize={22} width={'70%'} mt={6}>التوضيح:</Text>
+        //     <Flex
+        //         boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
+        //         width={'70%'}
+        //         height={'200px'}
+        //         mt={4}
+        //         borderRadius={12}
+        //         flexDir={'column'}
+        //         p={5}
+        //         overflowY={'scroll'}
+        //     >
+        //         {resp !== null && resp.map((item) => (
+        //             <Text fontFamily={font1} dir='rtl' mt={1}>
+        //                 {item.question} <Box as='spin' color={'green'}>{item.answer}</Box> : {item.why}
+        //             </Text>
+        //         ))}
+        //     </Flex>
+        // </Flex>
+        <Flex alignSelf={'center'} mt={40}>
+            {resp === null ? <Icon icon="svg-spinners:tadpole" width={'100px'} /> : navigate('/summary')}
         </Flex>
     )
 }

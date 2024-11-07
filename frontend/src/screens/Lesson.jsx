@@ -32,7 +32,7 @@ export default function Lesson() {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch(`https://i.zyll.shop/lesson/${id}/`)
+            fetch(`http://192.168.8.168:8000/lesson/${id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -55,7 +55,7 @@ export default function Lesson() {
 
     useEffect(() => {
         if (voice === null && resp !== null) {
-            fetch(`https://i.zyll.shop/voice/${id}/`, {
+            fetch(`http://192.168.8.168:8000/voice/${id}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ export default function Lesson() {
 
     useState(() => {
         if (respVideo === null) {
-            fetch(`https://i.zyll.shop/video/${id}/`)
+            fetch(`http://192.168.8.168:8000/video/${id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     setRespVideo(data);

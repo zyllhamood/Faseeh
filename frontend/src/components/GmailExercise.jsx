@@ -35,7 +35,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
     useEffect(() => {
         const fetchData = () => {
 
-            fetch('https://i.zyll.shop/gmail/')
+            fetch('http://192.168.8.168:8000/gmail/')
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -58,7 +58,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
         const fetchData = () => {
 
 
-            fetch('https://i.zyll.shop/gmail-solve/', {
+            fetch('http://192.168.8.168:8000/gmail-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -335,8 +335,8 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                                 {/* <SimpleText txt={'كما أحتاج منك إضافة بعض التفاصيل عن الميزانية و اداء الفريق، لأننا نحتاج لهذه المعلومات في الاجتماع القادم.'} />
                                 <SimpleText txt={'شكرًا لتعاونك.'} />
                                 <SimpleText txt={'تحياتي،'} /> */}
-                                <SimpleText txt={'------------------------------------'} />
-                                <SimpleText txt={resp !== null && resp.correct_errors} />
+                                {/* <SimpleText txt={'------------------------------------'} />
+                                <SimpleText txt={resp !== null && resp.correct_errors} /> */}
 
                                 <Button
                                     bgColor={'#19033C'}

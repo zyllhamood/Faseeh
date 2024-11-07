@@ -40,4 +40,11 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Summary(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='summaries')
+    title = models.CharField(max_length=50)
+    result = models.CharField(max_length=10)
+    data = models.JSONField()
 
+    def __str__(self):
+        return f"{self.user} - {self.title}"

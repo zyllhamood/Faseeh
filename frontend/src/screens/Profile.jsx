@@ -32,7 +32,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (lessons === null) {
-            fetch('https://i.zyll.shop/my-lessons/', {
+            fetch('http://192.168.8.168:8000/my-lessons/', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${Cookies.get('access_token')}`
@@ -57,7 +57,6 @@ export default function Profile() {
             setIsOpenSearch(false);
             return;
         }
-        console.log(`Value ${value}`)
         const filtered = lessons.filter(lesson =>
 
             lesson.lesson.title.includes(value)
@@ -66,7 +65,6 @@ export default function Profile() {
         setFilteredResults(filtered);
 
         setIsOpenSearch(true);
-        console.log(filtered)
         if (buttonRef.current) {
             if (isOpenSearch === false) {
                 buttonRef.current.click();

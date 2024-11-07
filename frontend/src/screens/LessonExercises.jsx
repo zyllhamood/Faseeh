@@ -12,6 +12,7 @@ const shuffleArray = (array) => {
 };
 export default function LessonExercises({ resp, showExercises, setShowExercises }) {
     const [showExercise2, setShowExercise2] = useState(false);
+    const [respChoose, setRespChoose] = useState(null);
     const [showResults, setShowResults] = useState(false);
     const [correctChooses, setCorrectChooses] = useState([]);
     const [wrongChooses, setWrongChooses] = useState([]);
@@ -24,6 +25,35 @@ export default function LessonExercises({ resp, showExercises, setShowExercises 
         setShowExercise2(false);
         setShowResults(true);
     }
+
+    useEffect(() => {
+        const fetchData = () => {
+            const query = { correctChooses, wrongChooses };
+            fetch('http://192.168.8.168:8000/chooses-solve/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Cookies.get("access_token")}`
+                },
+                body: JSON.stringify(query),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.resp !== null) {
+                        setRespChoose(data.resp);
+                    } else {
+                        setTimeout(fetchData, 1000);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error);
+                    setTimeout(fetchData, 1000);
+                });
+        }
+        if (respChoose === null && showExercise2) {
+            fetchData();
+        }
+    }, [respChoose, showExercise2])
     return (
         <>
             <Flex
@@ -245,6 +275,7 @@ const Question = ({ question, options, index, correct_answer, correctChooses, wr
                         setIsCLicked={setIsCLicked}
                         correctChooses={correctChooses}
                         wrongChooses={wrongChooses}
+                        all_options={options}
                     />
                 ))}
             </Flex>
@@ -252,7 +283,7 @@ const Question = ({ question, options, index, correct_answer, correctChooses, wr
     )
 }
 
-const Option = ({ txt, number, correct_answer, question, isClicked, setIsCLicked, correctChooses, wrongChooses }) => {
+const Option = ({ txt, number, correct_answer, question, isClicked, setIsCLicked, correctChooses, wrongChooses, all_options }) => {
     const statisColor = '#fff';
     const [bg, setBg] = useState(statisColor);
     const isCorrect = correct_answer === txt;
@@ -268,13 +299,12 @@ const Option = ({ txt, number, correct_answer, question, isClicked, setIsCLicked
 
             if (isCorrect) {
                 setBg(correctColor);
-                correctChooses.push({ "question": question, "answer": txt })
+                correctChooses.push({ "question": question, "answer": txt, options: all_options })
             }
             else {
                 setBg(wrongColor);
-                wrongChooses.push({ "question": question, "choose_answer": txt, "correct_answer": correct_answer })
+                wrongChooses.push({ "question": question, "choose_answer": txt, "correct_answer": correct_answer, options: all_options })
             }
-            console.log(wrongChooses)
         }
 
     }
@@ -328,8 +358,7 @@ const Results = ({ resp, parsing, correctChooses, wrongChooses }) => {
     useEffect(() => {
         const fetchData = () => {
             const query = { parsing, correctChooses, wrongChooses, sentence: resp.sentence_for_parsing };
-            console.log(query)
-            fetch('https://i.zyll.shop/lesson-solve/', {
+            fetch('http://192.168.8.168:8000/lesson-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
