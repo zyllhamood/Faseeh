@@ -24,8 +24,6 @@ Faseeh is a **modern interactive platform** designed to make learning Arabic gra
 - Start the server:
   ```bash
   python manage.py runserver
-  ```
-
 ### Frontend
 - **Framework**: React (Create React App)
 - Install dependencies:
