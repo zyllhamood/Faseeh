@@ -1,6 +1,3 @@
-Here's a complete **README.md** file that you can use! 🎉
-
-```markdown
 # 🎉 Welcome to Faseeh! 🚀
 
 Faseeh is a **modern interactive platform** designed to make learning Arabic grammar fun, engaging, and easy! 💡 Whether you're a beginner or looking to sharpen your skills, we've got you covered with interactive lessons, quizzes, and insights!
@@ -24,8 +21,10 @@ Faseeh is a **modern interactive platform** designed to make learning Arabic gra
 - Start the server:
   ```bash
   python manage.py runserver
+  ```
+
 ### Frontend
-- **Framework**: React (Create React App)
+- **Framework**: React (CRA)
 - Install dependencies:
   ```bash
   npm install
@@ -66,21 +65,10 @@ Faseeh/
 ---
 
 ## 🤝 Contributing
-We welcome contributions to make Faseeh even better! Follow these steps:
-
 1. Fork the repo 🍴
-2. Create a feature branch: 
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Commit changes: 
-   ```bash
-   git commit -m 'Added some cool features'
-   ```
-4. Push to branch: 
-   ```bash
-   git push origin feature-name
-   ```
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -m 'Added some cool features'`
+4. Push to branch: `git push origin feature-name`
 5. Submit a Pull Request 🔥
 
 ---
@@ -99,6 +87,3 @@ Special thanks to the amazing team:
 
 Let’s make learning Arabic **fun and accessible for everyone**! 🌍✨  
 Happy Coding! 🎉
-```
-
-Feel free to copy and paste this into your `README.md` file! 😊
