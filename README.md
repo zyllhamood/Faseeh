@@ -62,28 +62,10 @@ Faseeh/
 - **Run Tests**: `npm test`
 - **Build for Production**: `npm run build`
 
----
-
-## 🤝 Contributing
-1. Fork the repo 🍴
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -m 'Added some cool features'`
-4. Push to branch: `git push origin feature-name`
-5. Submit a Pull Request 🔥
-
----
 
 ## 📄 License
 This project is licensed under the [MIT License](LICENSE).
 
----
-
-## 👨‍💻 Contributors
-Special thanks to the amazing team:
-- **Dan Abrahmov** 🧑‍🏫
-- **حمود الإدريسي** 📝
-
----
 
 Let’s make learning Arabic **fun and accessible for everyone**! 🌍✨  
 Happy Coding! 🎉
