@@ -32,7 +32,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (lessons === null) {
-            fetch('http://192.168.8.168:8000/my-lessons/', {
+            fetch('http://172.20.10.5:8000/my-lessons/', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${Cookies.get('access_token')}`
@@ -268,7 +268,7 @@ export default function Profile() {
                                 }
                                 finished={item.finished}
                                 value={item.value}
-                                onClick={() => navigate(`/lesson/${item.id}/video`)}
+                                onClick={() => navigate(`/lesson/${item.id}`)}
                             />
                         </Box>
                     )) : <LoadingLesson />}

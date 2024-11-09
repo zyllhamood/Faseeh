@@ -14,13 +14,13 @@ urlpatterns = [
 
     path('lesson/',lesson_view),
     path('full-blank/',full_blank_view_new),
-    path('rapid-challange/',rapid_challange_view_new),
+    path('rapid-challange/<int:id>/',rapid_challange_view_new),
     path('report/',report_view),
-    path('cards/',cards_view_new),
-    path('daily-conversation/',daily_conversation_view_new),
+    path('cards/<int:id>/',cards_view_new),
+    path('daily-conversation/<int:id>/',daily_conversation_view_new),
 
     path('lesson/<int:pk>/',lesson_view_new),
-    path('lesson-old/',lesson_view),
+    path('lesson-view/<int:pk>/',lesson_view),
 
 
     path('rapid-challenge-solve/',rapid_challange_solve),
@@ -42,5 +42,10 @@ urlpatterns = [
 
     path('summary/',UserSummaryView.as_view()),
     path('summary/<int:id>/',summary_view),
+
+    path('lesson-last/<int:pk>/',lesson_view_last),
+
+    path('solve/<int:pk>/',lesson_solve_last),
+
     
 ]

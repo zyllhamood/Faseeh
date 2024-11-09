@@ -9,14 +9,14 @@ export default function LineExercises({ numLine }) {
     const hLineBrowser = '10px';
     const hLineMobile = '10px';
 
-    const wLineMobile = '50px';
-    const wLineBrowser = '180px';
+    const wLineMobile = '20px';
+    const wLineBrowser = '110px';
 
     const hLine2xl = '12px';
     const wLine2xl = '200px';
 
     const hLine3xl = '14px';
-    const wLine3xl = '240px';
+    const wLine3xl = '120px';
 
 
     const BoxBrowser = '40px';
@@ -39,8 +39,20 @@ export default function LineExercises({ numLine }) {
 
             <Box bgColor={numLine > 3 ? bk_done : bk_undone} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8}></Box>
             <Box bgColor={numLine > 3 ? bk_done : bk_undone} h={{ base: hLineMobile, md: hLineBrowser, "2xl": hLine2xl, "3xl": hLine3xl }} w={{ base: wLineMobile, md: wLineBrowser, "2xl": wLine2xl, "3xl": wLine3xl }}></Box>
-            <Flex bgColor={numLine > 3 ? bk_done : bk_undone} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8} justifyContent={'center'} alignItems={'center'}>
-                {numLine > 3 ? <Image src={check_png} width={'30px'} /> : ''}
+
+            <Box bgColor={numLine > 4 ? bk_done : bk_undone} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8}></Box>
+            <Box bgColor={numLine > 4 ? bk_done : bk_undone} h={{ base: hLineMobile, md: hLineBrowser, "2xl": hLine2xl, "3xl": hLine3xl }} w={{ base: wLineMobile, md: wLineBrowser, "2xl": wLine2xl, "3xl": wLine3xl }}></Box>
+
+            <Box bgColor={numLine > 5 ? bk_done : bk_undone} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8}></Box>
+            <Box bgColor={numLine > 5 ? bk_done : bk_undone} h={{ base: hLineMobile, md: hLineBrowser, "2xl": hLine2xl, "3xl": hLine3xl }} w={{ base: wLineMobile, md: wLineBrowser, "2xl": wLine2xl, "3xl": wLine3xl }}></Box>
+
+            <Box bgColor={numLine > 6 ? bk_done : bk_undone} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8}></Box>
+            <Box bgColor={numLine > 6 ? bk_done : bk_undone} h={{ base: hLineMobile, md: hLineBrowser, "2xl": hLine2xl, "3xl": hLine3xl }} w={{ base: wLineMobile, md: wLineBrowser, "2xl": wLine2xl, "3xl": wLine3xl }}></Box>
+
+
+
+            <Flex bgColor={numLine > 6 ? bk_done : bk_undone} h={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} w={{ base: BoxMobile, md: BoxBrowser, "2xl": Box2xl, "3xl": Box3xl }} borderRadius={8} justifyContent={'center'} alignItems={'center'}>
+                {numLine > 6 ? <Image src={check_png} width={'30px'} /> : ''}
             </Flex>
         </Flex>
     )

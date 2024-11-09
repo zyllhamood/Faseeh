@@ -14,42 +14,15 @@ function shuffleArray(array) {
     }
     return array;
 }
-export default function CradsExercise({ page, setPage, setNumLine }) {
-
-    const [resp, setResp] = useState(null);
+export default function CradsExercise({ resp, id, page, setPage, setNumLine, results, setResults }) {
+    console.log('sentecne');
+    console.log(resp.cards)
     const [options, setOptions] = useState(null);
     const [answers, setAnswers] = useState(null);
     const [finished, setFinished] = useState(false);
     const [chooses, setChooses] = useState([]);
 
-    useEffect(() => {
-        const fetchData = () => {
-            fetch('http://192.168.8.168:8000/cards/')
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setResp(data.resp);
-                        if (data.resp !== null) {
-                            const all_options = shuffleArray([...data.resp.options.map(item => item.option)]);
-                            const all_answers = shuffleArray([...data.resp.options.map(item => item.parsing)]);
-                            setOptions(all_options);
-                            setAnswers(all_answers);
-                        }
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
 
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-        if (resp === null) {
-            fetchData();
-        }
-
-    }, [resp]);
     const handleNext = () => {
         if (finished) {
             setPage('cards_finished')
@@ -104,84 +77,18 @@ export default function CradsExercise({ page, setPage, setNumLine }) {
                 display={page === 'cards_challange' ? 'flex' : 'none'}
                 alignItems={'center'}
             >
-                <Text fontFamily={font1} fontSize={24} textAlign={'center'}>الجملة : {resp !== null && resp.sentence}</Text>
+                <Text fontFamily={font1} fontSize={24} textAlign={'center'}>الجملة : {resp.cards[0].sentence}</Text>
 
-                <Cards page={page} setPage={setPage} data={resp} finished={finished} setFinished={setFinished} chooses={chooses} />
+                <Cards page={page} setPage={setPage} data={resp.cards[0]} finished={finished} setFinished={setFinished} chooses={chooses} results={results} setResults={setResults} setNumLine={setNumLine} />
             </Flex>
 
 
-            {page === 'cards_finished' && <Results page={page} setPage={setPage} resp={resp} chooses={chooses} />}
+            {/* {page === 'cards_finished' && <Results page={page} setPage={setPage} resp={resp} chooses={chooses} />} */}
         </>
     )
 }
 
-const Results = ({ page, setPage, resp, chooses }) => {
 
-    const [respSolve, setRespSolve] = useState(null);
-
-    useEffect(() => {
-        const fetchData = () => {
-            const query = { sentence: resp.sentence, chooses: chooses };
-
-            fetch('http://192.168.8.168:8000/cards-solve/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${Cookies.get("access_token")}`
-                },
-                body: JSON.stringify(query),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setRespSolve(data.resp);
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-        if (respSolve === null && page === 'cards_finished') {
-
-            fetchData();
-        }
-    }, [respSolve])
-
-    return (
-        <Flex
-            alignSelf={'end'}
-            mt={16}
-            flexDir={'column'}
-            dir='rtl'
-            width={'80%'}
-            mr={10}
-
-            alignItems={'center'}
-        >
-            <Image
-                src={success_png}
-                width={'180px'}
-            />
-            <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}>أحسنت</Text>
-
-            <Text fontFamily={font1} fontSize={{ base: 24, "2xl": 26, "3xl": 28 }} mt={12}> والأن انتقل إلى التمرين الثاني </Text>
-            <Image
-                src={next_png}
-                transform="rotate(180deg)"
-                w={'60px'}
-                alignSelf={'end'}
-                ml={{ base: 0, md: 10 }}
-                mt={{ base: 5, md: 0 }}
-
-                cursor={'pointer'}
-                onClick={() => setPage('gmail')}
-            />
-        </Flex>
-    )
-}
 
 const TextBox = ({ txt }) => {
     return (
@@ -212,10 +119,11 @@ const TextBox = ({ txt }) => {
 //     preposition: null,
 // };
 
-function Cards({ page, setPage, data, finished, setFinished, chooses }) {
+function Cards({ page, setPage, data, finished, setFinished, chooses, results, setResults, setNumLine }) {
     const [cards, setCards] = useState([]);
     const [sentence, setSentence] = useState({});
-
+    console.log('data')
+    console.log(data)
 
 
     useEffect(() => {
@@ -266,7 +174,11 @@ function Cards({ page, setPage, data, finished, setFinished, chooses }) {
         setSentence(updatedSentence);
         setCards(updatedCards); // Update the cards to reflect the removed one
         if (updatedCards.length === 0) {
-            setPage('cards_finished');
+            const query = { "sentence": data.sentence, "chooses": chooses }
+            setResults({ ...results, cards: query })
+            setPage('gmail_view');
+            setNumLine(1);
+
             setFinished(true);
         }
     };

@@ -13,7 +13,7 @@ export default function Summary() {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         if (resp === null) {
-            fetch('http://192.168.8.168:8000/summary/', {
+            fetch('http://172.20.10.5:8000/summary/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export default function Summary() {
         }
     }, [resp])
     const handleNext = (title, id) => {
-        const t = title === 'سحب البطاقات' ? 'cards' : title === 'اختر الإجابة الصحيحة' ? 'chooses' : title === 'الإعراب السريع' ? 'rapid' : title === 'أكمل الفراغ' ? 'full' : 'no'
+        const t = title === 'سحب البطاقات' ? 'cards' : title === 'اختر الإجابة الصحيحة' ? 'chooses' : title === 'تحدي الإعراب السريع' ? 'rapid' : title === 'أكمل الفراغ' ? 'full' : 'no'
         navigate(`/summary/${t}/${id}`)
     }
     return (

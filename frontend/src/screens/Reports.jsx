@@ -46,7 +46,7 @@ export default function Reports() {
     const [mistakes, setMistakes] = useState(null);
     useEffect(() => {
         if (resp === null) {
-            fetch('http://192.168.8.168:8000/report/')
+            fetch('http://172.20.10.5:8000/report/')
                 .then((response) => response.json())
                 .then((data) => {
                     setData(data.response);

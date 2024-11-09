@@ -47,7 +47,7 @@ const Question = ({ question, options, index, choose_answer, correct_answer, is_
                     pb={4}
                     mr={10}
                 >{num_question}</Text>
-                <Flex flexDir={'column'} alignItems={'center'} mt={'66px'} ml={4} cursor={'pointer'} onClick={onOpen}>
+                <Flex display={{ base: 'flex', md: 'none' }} flexDir={'column'} alignItems={'center'} mt={'66px'} ml={4} cursor={'pointer'} onClick={onOpen}>
                     <Image
                         src={help}
                         width={'50px'}
@@ -97,40 +97,57 @@ const Question = ({ question, options, index, choose_answer, correct_answer, is_
                     </ModalContent>
                 </Modal>
             </Flex>
-            <Flex
+            <Flex dir='rtl' justifyContent={'space-evenly'} >
+                <Flex
 
-                boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-                borderRadius={16}
-                p={5}
-                width={{ base: '340px', md: '700px' }}
-                pb={16}
-                flexDir={'column'}
-                mt={4}
-                pt={10}
-                dir='rtl'
-            >
-                <Text
-                    fontFamily={font1}
-                    fontSize={{ base: 18, md: 20, "3xl": 22 }}
-                    alignSelf={'center'}
-                    textAlign={{ base: 'center', md: 'start' }}
-                    bgColor={'#3d0c6e'}
-                    color={'#fff'}
-                    pt={6}
-                    pb={6}
-                    pr={4}
-                    pl={4}
+                    boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
                     borderRadius={16}
-                >{question}</Text>
-                {options.map((item, index) => (
-                    <Option
-                        txt={item}
-                        number={index === 0 ? 'أ' : index === 1 ? 'ب' : index === 2 ? 'ج' : index === 3 ? 'د' : ''}
-                        is_correct={is_correct}
-                        correct_answer={correct_answer}
-                        choose_answer={choose_answer}
+                    p={5}
+                    width={{ base: '340px', md: '700px' }}
+                    pb={16}
+                    flexDir={'column'}
+                    mt={4}
+                    pt={10}
+                    dir='rtl'
+                    ml
+                >
+                    <Text
+                        fontFamily={font1}
+                        fontSize={{ base: 18, md: 20, "3xl": 22 }}
+                        alignSelf={'center'}
+                        textAlign={{ base: 'center', md: 'start' }}
+                        bgColor={'#3d0c6e'}
+                        color={'#fff'}
+                        pt={6}
+                        pb={6}
+                        pr={4}
+                        pl={4}
+                        borderRadius={16}
+                    >{question}</Text>
+                    {options.map((item, index) => (
+                        <Option
+                            txt={item}
+                            number={index === 0 ? 'أ' : index === 1 ? 'ب' : index === 2 ? 'ج' : index === 3 ? 'د' : ''}
+                            is_correct={is_correct}
+                            correct_answer={correct_answer}
+                            choose_answer={choose_answer}
+                        />
+                    ))}
+
+                </Flex>
+                <Flex display={{ base: 'none', md: 'flex' }} alignSelf={'center'} flexDir={'column'} alignItems={'center'} mt={'66px'} ml={4} cursor={'pointer'} onClick={onOpen}>
+                    <Image
+                        src={help}
+                        width={'50px'}
+                        height={'50px'}
+
                     />
-                ))}
+
+                    <Text
+                        fontFamily={font1}
+                        textAlign={'center'}
+                    >لعرض التوضيح اضغط هنا</Text>
+                </Flex>
             </Flex>
         </Flex>
     )

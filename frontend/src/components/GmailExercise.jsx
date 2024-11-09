@@ -21,69 +21,18 @@ import link_png from '../assets/images/link.png'
 import play_again from '../assets/images/play-again.png'
 import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux'
-export default function GmailExercise({ page, setPage, setNumLine }) {
+export default function GmailExercise({ resp, page, setPage, setNumLine, results, setResults }) {
     const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclosure();
     const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
     const { isOpen: isOpen3, onOpen: onOpen3, onClose: onClose3 } = useDisclosure();
-    const [resp, setResp] = useState(null);
     const [respSolve, setRespSolve] = useState(null);
     const { full_name } = useSelector((state) => state.auth)
-    const [showAnswer, setShowAnswer] = useState(false)
     const messageRef = useRef('');
     const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        const fetchData = () => {
-
-            fetch('http://192.168.8.168:8000/gmail/')
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setResp(data.resp);
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-        if (resp === null) {
-            fetchData();
-        }
-    }, [resp])
-
-    useEffect(() => {
-        const fetchData = () => {
 
 
-            fetch('http://192.168.8.168:8000/gmail-solve/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: message,
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setRespSolve(data.resp);
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-        if (respSolve === null && showAnswer) {
-            fetchData();
-        }
-    }, [respSolve, showAnswer])
+
 
 
     const handleOpen2 = () => {
@@ -96,18 +45,23 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
     }
 
     const handleSend = () => {
-        setShowAnswer(true)
         const msg = messageRef.current.value;
         setMessage(msg);
         onClose3()
+        const query = { "corrected_message": msg, "orignal_message": resp.message, "errors_message": resp.correct_errors }
+        setResults({ ...results, gmail_msg: query })
+        setNumLine(2)
+        setPage('rapid_view')
+
     }
     const handleNext = () => {
         //setPage('cards')
-        setNumLine(4)
+        setPage('rapid_view');
+        setNumLine(2)
     }
     return (
         <>
-            <Flex alignSelf={'end'} mt={16} flexDir={'column'} dir='rtl' width={'100%'} display={showAnswer ? 'none' : 'flex'}>
+            <Flex alignSelf={'end'} mt={16} flexDir={'column'} dir='rtl' width={'100%'}>
                 <Text
                     fontFamily={font1}
                     fontSize={{ base: 26, "2xl": 28, "3xl": 30 }}
@@ -449,59 +403,7 @@ export default function GmailExercise({ page, setPage, setNumLine }) {
                     </ModalContent>
                 </Modal>
             </Flex >
-            <Flex display={showAnswer ? 'flex' : 'none'} alignSelf={'end'} mt={20} flexDir={'column'} dir='rtl' width={'100%'}>
-                <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} mr={8}>موضع الخطأ مع التصحيح</Text>
-                <Flex
-                    boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-                    width={'96%'}
-                    alignSelf={'center'}
-                    height={'500px'}
-                    borderRadius={8}
-                    mt={10}
-                    flexDir={'column'}
-                    alignItems={'center'}
-                    justifyContent={'center'}
-                >
-                    <TextContext wrong={'أن استفسر'} correct={'أن أستفسر'} why={'لأنها همزة قطع'} num={1} />
-                    <TextContext wrong={'من انهائه'} correct={'من إنهائه'} why={'لأنها همزة قطع'} num={2} />
-                    <TextContext wrong={'جاهز'} correct={'جاهزًا'} why={'خبر كان منصوب'} num={3} />
-                    <TextContext wrong={'و اداء'} correct={'وأداء'} why={'إزالة المسافة بعد الواو'} num={4} />
-                    <TextContext wrong={'نحتاج لهذه المعلومات'} correct={'إلى'} why={'الفعل "نحتاج" يتطلب حرف الجر "إلى"'} num={5} />
-                </Flex>
 
-                <Text fontFamily={font1} fontSize={{ base: 22, "2xl": 24, "3xl": 26 }} mr={16} mt={20}>التوضيح</Text>
-                <Flex
-                    boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-                    width={{ base: '96%', md: '70%' }}
-                    alignSelf={'center'}
-                    height={{ base: '340px', md: '300px' }}
-                    borderRadius={16}
-                    p={{ base: 2, md: 0 }}
-                    mt={10}
-                    flexDir={'column'}
-                    alignItems={'center'}
-                    justifyContent={'center'}
-                >
-                    <TextBox txt={'همزة القطع: هي همزة تكتب في بداية الكلمة، وتؤثر على النطق.'} size={24} />
-                    <TextBox txt={'نصب الخبر: عند استخدام "كان"، يجب أن يكون الخبر منصوبًا.'} size={24} />
-                    <TextBox txt={'حروف الجر: يجب استخدام حروف الجر الصحيحة لتوضيح المعاني في الجمل.'} size={24} />
-                </Flex>
-
-                <Flex
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                    dir='rtl'
-                    mt={10}
-                    pb={10}
-                    cursor={'pointer'}
-                    onClick={handleNext}
-                >
-                    <Text fontFamily={font1} fontSize={{ base: 26, "2xl": 28, "3xl": 30 }} ml={10}>
-                        التمرين التالي
-                    </Text>
-                    <Image src={next_png} width={'60px'} transform="rotate(180deg)" />
-                </Flex>
-            </Flex>
         </>
     )
 }

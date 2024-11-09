@@ -1,44 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Flex, Text, Button, Box, Image, Avatar, Input, Textarea } from '@chakra-ui/react';
 import Sidebar from '../components/Sidebar';
-import AvatarName from '../components/AvatarName';
-import MenuNav from '../components/MenuNav';
+
 import { font1 } from '../localVars';
 import man from '../assets/images/man.jpeg'
 import pizza from '../assets/images/pizza.jpeg'
 import metting from '../assets/images/metting.png'
 import arrow_up from '../assets/images/arrow-up.png';
 import Cookies from 'js-cookie';
-export default function DailyConversation() {
-    const [page, setPage] = useState('view');
-    const [resp, setResp] = useState(null)
+export default function DailyExercise({ resp, id, page, setPage, setNumLine, results, setResults }) {
+
     const [answer, setAnswer] = useState(null);
-    useEffect(() => {
-        const fetchData = () => {
-            fetch('http://172.20.10.5:8000/daily-conversation/')
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setResp(data.resp);
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-        if (resp === null) {
-            fetchData();
-        }
-    }, [resp])
+
     return (
-        <Flex direction={{ base: 'column', md: "row-reverse" }} minH="100vh" width={'100%'} color={'#fff'}>
-            <Sidebar page={'Home'} />
-            {page === 'view' ? <View setPage={setPage} resp={resp} /> :
-                page === 'challange' ? <Challange page={page} setPage={setPage} resp={resp} setAnswer={setAnswer} /> :
-                    <Results resp={resp} answer={answer} />
+        <Flex alignSelf={'end'} flexDir={'column'} dir='rtl' width={'100%'}>
+
+            {page === 'daily_view' ? <View setPage={setPage} resp={resp} /> :
+                page === 'daily_challange' ? <Challange page={page} setPage={setPage} resp={resp} setAnswer={setAnswer} results={results} setResults={setResults} setNumLine={setNumLine} /> :
+                    page === 'daily_results' ? <Results resp={resp} answer={answer} /> : ''
             }
 
         </Flex>
@@ -47,20 +26,7 @@ export default function DailyConversation() {
 
 const View = ({ setPage, resp }) => {
     return (
-        <Flex flex="1" width={{ base: '100%', md: '84%' }} flexDir={'column'} alignItems={'start'} color={'black'} pb={10} mr="16%" overflowY="auto">
-            <Flex
-                width={'90%'}
-                alignSelf={'center'}
-                mt={6}
-                justifyContent={'space-between'}
-                color={'black'}
-            >
-                <AvatarName />
-                <Box display={{ base: 'block', md: 'none' }} mt={1}>
-                    <MenuNav />
-                </Box>
-            </Flex>
-
+        <Flex alignSelf={'end'} flexDir={'column'} dir='rtl' width={'100%'}>
             <Image
                 src={metting}
                 width={'160px'}
@@ -81,7 +47,7 @@ const View = ({ setPage, resp }) => {
                 fontFamily={font1}
                 fontSize={24}
                 textAlign={'center'}
-                alignSelf={'end'}
+
                 width={'56%'}
                 mt={10}
                 dir='rtl'
@@ -106,36 +72,29 @@ const View = ({ setPage, resp }) => {
                 height={'54px'}
                 borderRadius={20}
                 _hover={{ opacity: 0.7 }}
-                onClick={() => setPage('challange')}
+                onClick={() => setPage('daily_challange')}
                 isLoading={resp === null ? true : false}
             >
                 البدء
             </Button>
+
         </Flex>
     )
 }
 
-const Challange = ({ page, setPage, resp, setAnswer }) => {
+const Challange = ({ page, setPage, resp, setAnswer, results, setResults, setNumLine }) => {
     const answerRef = useRef('')
     const handleClick = () => {
         const answer = answerRef.current.value.split('\n').join(' ');
         setAnswer(answer)
-        setPage('results');
+        // setPage('daily_results');
+        const query = { "questions": resp.questions, "answer": answer }
+        setResults({ ...results, daily_conversation: query })
+        setNumLine(4)
+        setPage('chooses_challange');
     }
     return (
-        <Flex flex="1" width={{ base: '100%', md: '84%' }} flexDir={'column'} alignItems={'start'} color={'black'} pb={10} mr="16%" overflowY="auto">
-            <Flex
-                width={'90%'}
-                alignSelf={'center'}
-                mt={6}
-                justifyContent={'space-between'}
-                color={'black'}
-            >
-                <AvatarName />
-                <Box display={{ base: 'block', md: 'none' }} mt={1}>
-                    <MenuNav />
-                </Box>
-            </Flex>
+        <Flex alignSelf={'end'} flexDir={'column'} dir='rtl' width={'100%'}>
             <Text
                 fontFamily={font1}
                 fontSize={24}
@@ -166,7 +125,6 @@ const Challange = ({ page, setPage, resp, setAnswer }) => {
             <Text
                 dir='rtl'
                 fontFamily={font1}
-                alignSelf={'end'}
                 mr={{ base: 10, md: '120px' }}
                 fontSize={20}
                 mt={10}
@@ -207,6 +165,8 @@ const Challange = ({ page, setPage, resp, setAnswer }) => {
                 alignSelf="center"
                 mt={5}
                 ml={{ base: 0, md: 20 }}
+                justifyContent={'space-between'}
+                dir='ltr'
             >
                 <Flex
                     ml={{ base: 5, md: 10 }}
@@ -221,6 +181,7 @@ const Challange = ({ page, setPage, resp, setAnswer }) => {
                     zIndex={2}
                     mt={3}
                     onClick={handleClick}
+
                 >
                     <Image src={arrow_up} width="26px" height="26px" />
                 </Flex>
@@ -254,7 +215,9 @@ const Challange = ({ page, setPage, resp, setAnswer }) => {
                         e.target.style.height = `${e.target.scrollHeight}px`; // Set height based on scroll height
                     }}
                 />
+
             </Flex>
+
         </Flex>
     )
 }

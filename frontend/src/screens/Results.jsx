@@ -15,7 +15,7 @@ export default function Results() {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         if (resp === null) {
-            fetch(`http://192.168.8.168:8000/summary/${id}`)
+            fetch(`http://172.20.10.5:8000/summary/${id}`)
                 .then((response) => response.json())
                 .then((data) => setResp(data))
         }

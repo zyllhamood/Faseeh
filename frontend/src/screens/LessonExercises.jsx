@@ -29,7 +29,7 @@ export default function LessonExercises({ resp, showExercises, setShowExercises 
     useEffect(() => {
         const fetchData = () => {
             const query = { correctChooses, wrongChooses };
-            fetch('http://192.168.8.168:8000/chooses-solve/', {
+            fetch('http://172.20.10.5:8000/chooses-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -358,7 +358,7 @@ const Results = ({ resp, parsing, correctChooses, wrongChooses }) => {
     useEffect(() => {
         const fetchData = () => {
             const query = { parsing, correctChooses, wrongChooses, sentence: resp.sentence_for_parsing };
-            fetch('http://192.168.8.168:8000/lesson-solve/', {
+            fetch('http://172.20.10.5:8000/lesson-solve/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

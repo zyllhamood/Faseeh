@@ -32,7 +32,7 @@ export default function Lesson() {
     const [resp, setResp] = useState(null);
     useEffect(() => {
         const fetchData = () => {
-            fetch(`http://192.168.8.168:8000/lesson/${id}/`)
+            fetch(`http://172.20.10.5:8000/lesson/${id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.resp !== null) {
@@ -55,7 +55,7 @@ export default function Lesson() {
 
     useEffect(() => {
         if (voice === null && resp !== null) {
-            fetch(`http://192.168.8.168:8000/voice/${id}/`, {
+            fetch(`http://172.20.10.5:8000/voice/${id}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ export default function Lesson() {
 
     useState(() => {
         if (respVideo === null) {
-            fetch(`http://192.168.8.168:8000/video/${id}/`)
+            fetch(`http://172.20.10.5:8000/video/${id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     setRespVideo(data);

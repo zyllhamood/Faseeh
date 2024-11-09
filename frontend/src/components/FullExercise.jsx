@@ -8,33 +8,16 @@ import MenuNav from '../components/MenuNav';
 import Cookies from 'js-cookie';
 import { Icon } from '@iconify/react'
 import { useNavigate } from 'react-router-dom'
-export default function FullBlank() {
-    const [page, setPage] = useState('view');
-    const [resp, setResp] = useState(null);
-    useEffect(() => {
-        const fetchData = () => {
-            fetch('http://172.20.10.5:8000/full-blank/')
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setResp(data.resp);
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-        if (resp === null) {
-            fetchData();
-        }
-    }, [resp])
+export default function FullExercise({ resp, id, page, setPage, setNumLine, results, setResults }) {
+
+    const [answer, setAnswer] = useState(null);
+
     return (
-        <Flex direction={{ base: 'column', md: "row-reverse" }} minH="100vh" width={'100%'} color={'#fff'}>
-            <Sidebar page={'Home'} />
-            {page === 'view' ? <View setPage={setPage} resp={resp} /> : <Challange page={page} setPage={setPage} resp={resp} />}
+        <Flex alignSelf={'end'} flexDir={'column'} dir='rtl' width={'100%'}>
+
+            {page === 'full_view' ? <View setPage={setPage} resp={resp} /> :
+                page === 'full_challange' ? <Challange page={page} setPage={setPage} resp={resp} setAnswer={setAnswer} results={results} setResults={setResults} setNumLine={setNumLine} /> : ''
+            }
 
         </Flex>
     )
@@ -42,19 +25,7 @@ export default function FullBlank() {
 
 const View = ({ setPage, resp }) => {
     return (
-        <Flex flex="1" width={{ base: '100%', md: '84%' }} flexDir={'column'} alignItems={'start'} color={'black'} pb={10} mr="16%" overflowY="auto">
-            <Flex
-                width={'90%'}
-                alignSelf={'center'}
-                mt={6}
-                justifyContent={'space-between'}
-                color={'black'}
-            >
-                <AvatarName />
-                <Box display={{ base: 'block', md: 'none' }} mt={1}>
-                    <MenuNav />
-                </Box>
-            </Flex>
+        <Flex alignSelf={'end'} flexDir={'column'} dir='rtl' width={'100%'}>
 
 
             <Image
@@ -76,7 +47,6 @@ const View = ({ setPage, resp }) => {
                 fontFamily={font1}
                 fontSize={24}
                 textAlign={'center'}
-                alignSelf={'end'}
                 width={'56%'}
                 mt={10}
                 dir='rtl'
@@ -149,7 +119,7 @@ const View = ({ setPage, resp }) => {
                 height={'54px'}
                 borderRadius={20}
                 _hover={{ opacity: 0.7 }}
-                onClick={() => setPage('challange')}
+                onClick={() => setPage('full_challange')}
                 isLoading={resp === null ? true : false}
             >
                 البدء
@@ -158,22 +128,11 @@ const View = ({ setPage, resp }) => {
     )
 }
 
-const Challange = ({ page, setPage, resp }) => {
+const Challange = ({ page, setPage, resp, results, setResults, setNumLine }) => {
     const [wrongAnswers, setWrongAnswers] = useState([]);
     return (
-        <Flex flex="1" width={{ base: '100%', md: '84%' }} flexDir={'column'} alignItems={'start'} color={'black'} pb={10} mr="16%" overflowY="auto">
-            <Flex
-                width={'90%'}
-                alignSelf={'center'}
-                mt={6}
-                justifyContent={'space-between'}
-                color={'black'}
-            >
-                <AvatarName />
-                <Box display={{ base: 'block', md: 'none' }} mt={1}>
-                    <MenuNav />
-                </Box>
-            </Flex>
+        <Flex alignSelf={'end'} flexDir={'column'} dir='rtl' width={'100%'}>
+
 
             <Text
                 fontFamily={font1}
@@ -181,13 +140,13 @@ const Challange = ({ page, setPage, resp }) => {
                 alignSelf={'center'}
                 mt={'80px'}
             >تمرين إملأ الفراغ</Text>
-            {page === 'challange' ? <Question setPage={setPage} resp={resp} wrongAnswers={wrongAnswers} /> : <Results wrongAnswers={wrongAnswers} />}
+            <Question setPage={setPage} resp={resp} wrongAnswers={wrongAnswers} results={results} setResults={setResults} setNumLine={setNumLine} />
 
         </Flex>
     )
 }
 
-const Question = ({ setPage, resp, wrongAnswers }) => {
+const Question = ({ setPage, resp, wrongAnswers, results, setResults, setNumLine }) => {
     const [num, setNum] = useState(0)
 
 
@@ -197,6 +156,9 @@ const Question = ({ setPage, resp, wrongAnswers }) => {
             wrongAnswers.push({ question: item.question, choose: choose, correct_answer: item.correct })
         }
         if (num === 3) {
+            const query = { "wrongAnswers": wrongAnswers }
+            setResults({ ...results, full_blank: query })
+            setNumLine(7);
             setPage('results')
         }
         else {
@@ -207,7 +169,8 @@ const Question = ({ setPage, resp, wrongAnswers }) => {
         resp !== null && (
             <>
                 <Flex
-                    boxShadow="0px 3.51px 20.21px 0px #1B0378"
+                    // boxShadow="0px 3.51px 20.21px 0px #1B0378"
+                    boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
                     width={{ base: '340px', md: '660px' }}
                     height={'180px'}
                     borderRadius={12}
@@ -266,79 +229,3 @@ const Answer = ({ txt, onClick }) => {
     )
 }
 
-const Results = ({ wrongAnswers }) => {
-    const [resp, setResp] = useState(null);
-    const navigate = useNavigate();
-    useEffect(() => {
-        const fetchData = () => {
-            fetch('http://172.20.10.5:8000/full-blank-solve/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${Cookies.get("access_token")}`
-                },
-                body: JSON.stringify(wrongAnswers),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.resp !== null) {
-                        setResp(data.resp);
-                    } else {
-                        setTimeout(fetchData, 1000);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Fetch error:', error);
-                    setTimeout(fetchData, 1000);
-                });
-        }
-
-        if (resp === null) {
-            fetchData();
-        }
-    }, [resp])
-    return (
-        // <Flex flexDir={'column'} dir='rtl' alignItems={'center'} width={'100%'}>
-        //     <Text fontFamily={font1} fontSize={22} width={'70%'} mt={10}>الإجابات الخاطئة التصحيح:</Text>
-        //     <Flex
-        //         boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-        //         width={'70%'}
-        //         height={'200px'}
-        //         mt={4}
-        //         borderRadius={12}
-        //         flexDir={'column'}
-        //         p={5}
-        //     >
-        //         {wrongAnswers.map((item) => (
-        //             <Text
-        //                 fontFamily={font1}
-        //                 dir='rtl'
-
-        //                 mt={1}
-        //             >{item.question}  <Box mr={2} as='spin' color={'red'}>{item.choose}</Box></Text>
-        //         ))}
-        //     </Flex>
-
-        //     <Text fontFamily={font1} fontSize={22} width={'70%'} mt={6}>التوضيح:</Text>
-        //     <Flex
-        //         boxShadow="0px 4px 10px rgba(0, 0, 0, 0.25)"
-        //         width={'70%'}
-        //         height={'200px'}
-        //         mt={4}
-        //         borderRadius={12}
-        //         flexDir={'column'}
-        //         p={5}
-        //         overflowY={'scroll'}
-        //     >
-        //         {resp !== null && resp.map((item) => (
-        //             <Text fontFamily={font1} dir='rtl' mt={1}>
-        //                 {item.question} <Box as='spin' color={'green'}>{item.answer}</Box> : {item.why}
-        //             </Text>
-        //         ))}
-        //     </Flex>
-        // </Flex>
-        <Flex alignSelf={'center'} mt={40}>
-            {resp === null ? <Icon icon="svg-spinners:tadpole" width={'100px'} /> : navigate('/summary')}
-        </Flex>
-    )
-}

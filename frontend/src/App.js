@@ -22,6 +22,7 @@ import FullBlank from './screens/FullBlank';
 import DailyConversation from './screens/DailyConversation';
 import Summary from './screens/Summary';
 import Results from './screens/Results';
+import LessonNew from './screens/LessonNew';
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function App() {
             <Route path="/lessons" element={<Lessons />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/lesson/:id/:type" element={<Lesson />} />
+            <Route path="/lesson/:id" element={<LessonNew />} />
             <Route path="/login" element={<Login />} />
             <Route path="/exercises" element={<Exercises />} />
             <Route path="/register" element={<Register />} />
